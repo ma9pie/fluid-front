@@ -19,6 +19,8 @@ import useWallet from '@/hooks/useWallet';
 
 const Index = () => {
   const { account } = useWallet();
+  const [stGASBalance, setStGASBalance] = useState<string>('plz update');
+  const [fluidBalance, setFluidBalance] = useState<string>('plz update');
   const [stGASTotalSupply, setStGASTotalSupply] = useState<string>('plz update');
   const [fluidTotalSupply, setFluidTotalSupply] = useState<string>('plz update');
   const [stGASParams, setStGASParams] = useState<string>('plz update');
@@ -202,6 +204,34 @@ const Index = () => {
       console.log(err);
     }
   }
+
+  const getStGASBalance = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
+      const res = (await contract.balanceOf(signer.address)) / BigInt(1e10);
+      const resProcessed = Number(res) / 1e8;
+      setStGASBalance(resProcessed.toString());
+      console.log(res);
+    }  catch (err) {
+      console.log(err);
+    }
+  }
+  const getFluidBalance = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
+      const res = (await contract.balanceOf(signer.address) / BigInt(1e18));
+      setFluidBalance(res.toString());
+      console.log(res);
+    }  catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <Layout>
       <Flex col gap={16}>
@@ -217,6 +247,16 @@ const Index = () => {
         <div>Fluid totalSupply</div>
         <div>{fluidTotalSupply}</div>
         <Button onClick={getFluidTotalSupply}> update Fluid totalSupply</Button>
+
+
+        <div>stGAS Balance</div>
+        <div>{stGASBalance}</div>
+        <Button onClick={getStGASBalance}> update stGAS Balance</Button>
+
+
+        <div>Fluid Balance</div>
+        <div>{fluidBalance}</div>
+        <Button onClick={getFluidBalance}> update Fluid Balance</Button>
 
         <Button onClick={runFluidFaucet}>fluid faucet</Button>
 
