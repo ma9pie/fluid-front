@@ -1,53 +1,48 @@
-import { readContract, writeContract } from '@wagmi/core';
-import { Contract, parseEther, Signer } from 'ethers';
+import { Contract, ethers, parseEther, Signer } from 'ethers';
 import React from 'react';
 import tw, { styled } from 'twin.macro';
 
-import IERC20ABI from '@/abis/IERC20.json';
+import Fluid20ABI from '@/abis/Fluid.json';
+import StGASABI from '@/abis/StGAS.json';
 import Button from '@/components/common/buttons/Button';
 import Flex from '@/components/common/Flex';
 import Layout from '@/components/layout/Layout';
-import { blastSepoliaTestnet } from '@/constants';
+import {
+  blastSepoliaTestnet,
+  FLUID_CONTRACT_ADDRESS,
+  ST_GAS_CONTRACT_ADDRESS,
+} from '@/constants';
 import useWallet from '@/hooks/useWallet';
 
 const Index = () => {
   const { account } = useWallet();
 
-  // [example 1] - call token balance
+  // [example 1] - totalSupply 조회
   const runExample1 = async () => {
     try {
-      if (!account) return;
+      const provider = new ethers.BrowserProvider(window.ethereum);
 
-      const contractAddress = '???';
-
-      const res = await readContract({
-        chainId: blastSepoliaTestnet.id,
-        address: contractAddress as `0x${string}`,
-        abi: IERC20ABI,
-        functionName: 'balanceOf',
-        args: [account],
-      });
+      const contract = new Contract(
+        FLUID_CONTRACT_ADDRESS,
+        Fluid20ABI,
+        provider
+      );
+      const res = await contract.totalSupply();
       console.log(res);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // [example 2] - send deposit
+  // [example 2] - Fluid contract에  approve 하기
   const runExample2 = async () => {
     try {
       if (!account) return;
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
 
-      const tokenAddress = '???';
-      const contractAddress = '???';
-
-      const res = await writeContract({
-        chainId: blastSepoliaTestnet.id,
-        address: tokenAddress as `0x${string}`,
-        abi: IERC20ABI,
-        functionName: 'approve',
-        args: [contractAddress, parseEther('0')],
-      });
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
+      const res = await contract.approve(account, parseEther('0'));
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -55,7 +50,14 @@ const Index = () => {
   };
 
   // 버튼 실행 로직을 구성해주세요.
-  const handleClick = () => {};
+  const handleClick = async () => {
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Layout>
