@@ -1,6 +1,5 @@
-import cn from 'classnames';
 import { useTheme } from 'next-themes';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
 import Divider from '@/components/common/Divider';
