@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { IoWarningOutline } from 'react-icons/io5';
 import tw, { styled } from 'twin.macro';
 import { mainnet } from 'wagmi/chains';
-import useWallet from '@/hooks/useWallet';
+
 import Flex from '@/components/common/Flex';
 import Text from '@/components/common/Text';
+import { blastSepoliaTestnet } from '@/constants';
+import useWallet from '@/hooks/useWallet';
 
 const ChainButton = () => {
   const { chain, chains, switchNetwork } = useWallet();
@@ -15,6 +17,7 @@ const ChainButton = () => {
 
   useEffect(() => {
     const currentChain = chains.find((item) => item.id === id);
+
     if (currentChain) {
       setChainName(currentChain.name);
     } else {
@@ -30,7 +33,7 @@ const ChainButton = () => {
         <Flex
           items="center"
           gap={4}
-          onClick={() => switchNetwork?.(mainnet.id)}
+          onClick={() => switchNetwork?.(blastSepoliaTestnet.id)}
         >
           <IoWarningOutline size={24}></IoWarningOutline>
           <Text nowrap>Invalid network</Text>

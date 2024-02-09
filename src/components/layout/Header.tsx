@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import tw, { styled } from 'twin.macro';
 import {
   Navbar,
   NavbarContent,
-  NavbarMenuToggle,
   NavbarMenu,
+  NavbarMenuToggle,
 } from '@nextui-org/react';
+import React, { useState } from 'react';
+import tw, { styled } from 'twin.macro';
 
 import ChainButton from '@/components/common/buttons/ChainButton';
 import ConnectWalletBtn from '@/components/common/buttons/ConnectWalletBtn';
-import ThemeToggle from '@/components/common/ThemeToggle';
 import Flex from '@/components/common/Flex';
 import ResponsiveView from '@/components/common/ResponsiveView';
+import ThemeToggle from '@/components/common/ThemeToggle';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
