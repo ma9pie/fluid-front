@@ -18,7 +18,7 @@ const Home = () => {
             semibold
             size={72}
           >
-            DApp
+            Fluid
           </Text>
         </ContentWrapper>
 

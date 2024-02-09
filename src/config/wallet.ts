@@ -26,7 +26,7 @@ export const wagmiConfig = createConfig({
     new CoinbaseWalletConnector({
       chains,
       options: {
-        appName: 'dapp',
+        appName: 'fluid',
       },
     }),
     new InjectedConnector({

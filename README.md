@@ -1,16 +1,4 @@
-## This repo is
-DApp boilerplate repository
+# fluid
 
-
-## Getting started
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### how to start
+npm i && npm run dev
