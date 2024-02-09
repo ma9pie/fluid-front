@@ -225,7 +225,7 @@
   },
   {
     "type": "function",
-    "name": "setWhiltelist",
+    "name": "setWhitelist",
     "inputs": [
       { "name": "target", "type": "address", "internalType": "address" }
     ],
