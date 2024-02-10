@@ -1,3 +1,4 @@
+import { formatUnits } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useBalance } from 'wagmi';
 
@@ -16,7 +17,7 @@ const useTokenBalance = ({ token }: Props) => {
 
   const tokenAddress = token?.isNativeToken ? undefined : token?.address;
 
-  const { data } = useBalance({
+  const { data, refetch } = useBalance({
     chainId: CHAIN_ID,
     address: account as `0x${string}`,
     token: tokenAddress as `0x${string}`,
@@ -24,11 +25,10 @@ const useTokenBalance = ({ token }: Props) => {
 
   useEffect(() => {
     if (!data) return setBalance('0');
-    const { formatted } = data;
-    setBalance(formatted);
-  }, [data]);
+    setBalance(formatUnits(data.value, token?.decimals));
+  }, [token, data]);
 
-  return balance;
+  return { balance, refetch };
 };
 
 export default useTokenBalance;

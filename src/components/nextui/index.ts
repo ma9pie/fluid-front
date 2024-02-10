@@ -12,6 +12,7 @@ import {
   NavbarMenuToggle,
   NextUIProvider,
   Slider,
+  Spinner,
   Switch,
 } from '@nextui-org/react';
 
@@ -29,5 +30,6 @@ export {
   NavbarMenuToggle,
   NextUIProvider,
   Slider,
+  Spinner,
   Switch,
 };

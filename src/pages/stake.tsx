@@ -1,29 +1,42 @@
-import { Contract, ethers, parseEther } from 'ethers';
+import { waitForTransactionReceipt } from '@wagmi/core';
+import { BrowserProvider, Contract, parseEther } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
 import FluidABI from '@/abis/Fluid.json';
-import Button from '@/components/common/buttons/Button';
+import TxRunButton from '@/components/common/buttons/TxRunButton';
 import TokenAmountInput from '@/components/common/inputs/TokenAmountInput';
 import Spacing from '@/components/common/Spacing';
 import Layout from '@/components/layout/Layout';
 import { Card, Slider } from '@/components/nextui';
 import { FLUID_CONTRACT_ADDRESS } from '@/constants';
 import { FLUID } from '@/constants';
+import useContract from '@/hooks/useContract';
+import useModal from '@/hooks/useModal';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import useWallet from '@/hooks/useWallet';
 import { math } from '@/utils';
 
 const Stake = () => {
   const { account } = useWallet();
-  const balance = useTokenBalance({
+  const { getTxReceipt } = useContract();
+  const { balance, refetch: refetchBalance } = useTokenBalance({
     token: FLUID,
   });
+  const {
+    openTxSuccessModal,
+    openTxFailedModal,
+    openTxWaitingModal,
+    changeModal,
+  } = useModal();
 
   const [amount, setAmount] = useState('');
   const [percent, setPercent] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [disableInput, setDisableInput] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
+  const [buttonText, setButtonText] = useState('');
 
   // 지갑 미연결 시
   useEffect(() => {
@@ -33,12 +46,25 @@ const Stake = () => {
 
   // 버튼 활성화 여부
   useEffect(() => {
-    if (!account || math(amount).eq(0)) {
+    if (
+      isLoading ||
+      !account ||
+      math(amount).eq(0) ||
+      math(amount).gt(balance)
+    ) {
       setDisableButton(true);
     } else {
       setDisableButton(false);
     }
-  }, [account, amount]);
+  }, [isLoading, account, amount, balance]);
+
+  useEffect(() => {
+    if (math(amount).gt(balance)) {
+      setButtonText('Invalid amount');
+    } else {
+      setButtonText('Stake');
+    }
+  }, [amount, balance]);
 
   // Input 입력 관리
   const handleChangeInput = (value: string) => {
@@ -68,16 +94,30 @@ const Stake = () => {
   const stake = async () => {
     try {
       if (!account) return;
-      const provider = new ethers.BrowserProvider(window.ethereum);
+      setIsLoading(true);
+      openTxWaitingModal();
+      const provider = new BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
       const parsedAmount = parseEther(amount);
       const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
 
-      const res = await contract.stake(parsedAmount);
-      console.log(res);
+      const { hash } = await contract.stake(parsedAmount);
+      const receipt = await getTxReceipt(hash);
+      console.log(receipt);
+
+      changeModal(() =>
+        openTxSuccessModal({
+          txHash: hash,
+        })
+      );
+      refetchBalance();
+      resetInputs();
     } catch (err) {
       console.log(err);
+      changeModal(() => openTxFailedModal());
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -112,9 +152,12 @@ const Stake = () => {
 
         <Spacing height={64}></Spacing>
 
-        <Button full color="default" disabled={disableButton} onClick={stake}>
-          Stake
-        </Button>
+        <TxRunButton
+          buttonText={buttonText}
+          isLoading={isLoading}
+          disabled={disableButton}
+          onClick={stake}
+        ></TxRunButton>
       </Container>
     </Layout>
   );

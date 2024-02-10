@@ -1,8 +1,12 @@
 import { useCallback, useContext } from 'react';
 
+import TxFailedModal from '@/components/modals/tx/TxFailedModal';
+import TxSuccessModal from '@/components/modals/tx/TxSuccessModal';
+import TxWaitingModal from '@/components/modals/tx/TxWaitingModal';
 import ConnectWalletModal from '@/components/modals/wallet/ConnectWalletModal';
 import { ModalContext } from '@/components/providers/ModalProvider';
 import { ModalProps, Modals } from '@/types';
+import { TxSuccessModalProps } from '@/types';
 import { createUid } from '@/utils';
 
 let tmpModals: Modals;
@@ -85,12 +89,41 @@ const useModal = () => {
     });
   }, [openModal]);
 
+  // Tx 성공 모달
+  const openTxSuccessModal = useCallback(
+    (props: TxSuccessModalProps) => {
+      openModal({
+        component: () => <TxSuccessModal {...props}></TxSuccessModal>,
+      });
+    },
+    [openModal]
+  );
+
+  // Tx 실패 모달
+  const openTxFailedModal = useCallback(() => {
+    openModal({
+      component: () => <TxFailedModal></TxFailedModal>,
+    });
+  }, [openModal]);
+
+  // Tx 대기 모달
+  const openTxWaitingModal = useCallback(() => {
+    openModal({
+      isDismissable: false,
+      component: () => <TxWaitingModal></TxWaitingModal>,
+    });
+  }, [openModal]);
+
   return {
     openModal,
     closeModal,
     changeModal,
 
     openConnectWalletModal,
+
+    openTxSuccessModal,
+    openTxFailedModal,
+    openTxWaitingModal,
   };
 };
 

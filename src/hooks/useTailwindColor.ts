@@ -18,7 +18,7 @@ const useTailwindColor = ({ defaultColor, ...props }: Props) => {
       code = tailwindColor[number];
     });
     return code;
-  }, [props]);
+  }, [defaultColor, props]);
 
   return color;
 };

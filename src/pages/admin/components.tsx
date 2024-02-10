@@ -7,8 +7,12 @@ import TokenAmountInput from '@/components/common/inputs/TokenAmountInput';
 import Layout from '@/components/layout/Layout';
 import { Card } from '@/components/nextui';
 import { ETH, FLUID, STGAS } from '@/constants';
+import useModal from '@/hooks/useModal';
 
 const Components = () => {
+  const { openTxSuccessModal, openTxFailedModal, openTxWaitingModal } =
+    useModal();
+
   const [amountOfETH, setAmountOfETH] = useState('');
   const [amountOfFluid, setAmountOfFluid] = useState('');
   const [amountOfStGas, setAmountOfStGas] = useState('');
@@ -16,21 +20,41 @@ const Components = () => {
   return (
     <Layout>
       <Container>
-        <TokenAmountInput
-          token={ETH}
-          amount={amountOfETH}
-          onChange={() => {}}
-        ></TokenAmountInput>
-        <TokenAmountInput
-          token={FLUID}
-          amount={amountOfFluid}
-          onChange={() => {}}
-        ></TokenAmountInput>
-        <TokenAmountInput
-          token={STGAS}
-          amount={amountOfStGas}
-          onChange={() => {}}
-        ></TokenAmountInput>
+        <Button color="primary" onClick={() => openTxSuccessModal({})}>
+          openTxSuccessModal
+        </Button>
+
+        <Button color="primary" onClick={() => openTxFailedModal()}>
+          openTxFailedModal
+        </Button>
+
+        <Button color="primary" onClick={() => openTxWaitingModal()}>
+          openTxWaitingModal
+        </Button>
+
+        <InputWrapper>
+          <TokenAmountInput
+            token={ETH}
+            amount={amountOfETH}
+            onChange={() => {}}
+          ></TokenAmountInput>
+        </InputWrapper>
+
+        <InputWrapper>
+          <TokenAmountInput
+            token={FLUID}
+            amount={amountOfFluid}
+            onChange={() => {}}
+          ></TokenAmountInput>
+        </InputWrapper>
+
+        <InputWrapper>
+          <TokenAmountInput
+            token={STGAS}
+            amount={amountOfStGas}
+            onChange={() => {}}
+          ></TokenAmountInput>
+        </InputWrapper>
       </Container>
     </Layout>
   );
@@ -39,5 +63,8 @@ const Components = () => {
 export default Components;
 
 const Container = styled.div`
-  ${tw`flex flex-col gap-6 w-96`};
+  ${tw`flex flex-col gap-6 max-w-[384px]`};
+`;
+const InputWrapper = styled(Card)`
+  ${tw`p-4`};
 `;

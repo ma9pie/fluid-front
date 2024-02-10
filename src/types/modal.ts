@@ -18,3 +18,7 @@ export interface ModalProps {
   component?: () => JSX.Element;
 }
 export type Modals = Map<string, ModalProps>;
+
+export interface TxSuccessModalProps {
+  txHash?: string;
+}
