@@ -88,7 +88,7 @@ const WalletBox = styled.div`
   ${tw`flex flex-col gap-1 items-center`};
 `;
 const IconBox = styled.div<{ size: number }>`
-  ${tw`relative flex justify-center items-center border-4 border-solid border-neutral-800 rounded-xl`};
+  ${tw`relative flex justify-center items-center border-4 border-solid border-neutral-800 rounded-xl cursor-pointer`};
   width: ${(props) => `${props.size}px`};
   height: ${(props) => `${props.size}px`};
 `;
