@@ -1,3 +1,5 @@
+import fromExponential from 'from-exponential';
+
 /**
  * 문자열 중략
  */
@@ -20,13 +22,6 @@ export const trimZero = (value: string) => {
   return value.replace(regex, '$1$2');
 };
 
-// 숫자 => 문자열
-export const numberToString = (num: number | string) => {
-  return Number(num)
-    .toFixed(18)
-    .replace(/\.?0+$/, '');
-};
-
 // 콤마 추가
 export const comma = (
   number: number | string | undefined | null,
@@ -40,7 +35,7 @@ export const comma = (
   ) {
     return '0';
   }
-  let splitVal = numberToString(number).split('.');
+  let splitVal = fromExponential(number).split('.');
   if (precision !== undefined && splitVal[1]) {
     splitVal[1] = splitVal[1].substring(0, precision);
   }
@@ -62,7 +57,7 @@ export const decomma = (number: number | string | undefined) => {
 // 소수점 버림 처리
 export const floor = (num: number | string, precision?: number) => {
   if (!num) return '0';
-  const _num = numberToString(num);
+  const _num = fromExponential(num);
   let [integer, digits] = _num.split('.');
   if (precision === 0) return integer;
   digits = digits && precision ? digits.slice(0, precision) : digits;
