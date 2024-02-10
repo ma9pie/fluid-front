@@ -9,7 +9,7 @@ import { blastSepoliaTestnet } from '@/constants';
 import useWallet from '@/hooks/useWallet';
 
 const ChainButton = () => {
-  const { chain, chains, switchNetwork } = useWallet();
+  const { account, chain, chains, switchNetwork } = useWallet();
 
   const [chainName, setChainName] = useState('');
 
@@ -25,6 +25,7 @@ const ChainButton = () => {
     }
   }, [id]);
 
+  if (!account) return null;
   return (
     <Wrapper>
       {chainName ? (
