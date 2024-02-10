@@ -1,3 +1,4 @@
+// uid 생성
 export const createUid = () => {
   if (typeof window !== undefined && window.crypto) {
     const array = new Uint32Array(1);

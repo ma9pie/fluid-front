@@ -22,6 +22,7 @@ const Wrapper = styled.main`
   ${tw`flex flex-col min-h-screen`};
 `;
 const Content = styled.div`
-  ${tw`flex flex-col flex-1 p-4`};
-  ${tw`sm:p-6`};
+  ${tw`flex flex-col flex-1`};
+  ${tw`px-4 py-12`};
+  ${tw`sm:(px-6 py-24)`};
 `;

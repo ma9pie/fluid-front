@@ -1,25 +1,18 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useAccount,
-  useBalance,
+  useConfig,
   useConnect,
   useDisconnect,
-  useNetwork,
-  useSwitchNetwork,
+  useSwitchChain,
 } from 'wagmi';
 
-import ConnectWalletModal from '@/components/modals/wallet/ConnectWalletModal';
-import useModal from '@/hooks/useModal';
-
 const useWallet = () => {
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect();
+  const { connectors, error, connect } = useConnect();
   const { disconnect } = useDisconnect();
-  const { address } = useAccount();
-  const {} = useBalance({ address: address });
-  const { chain, chains } = useNetwork();
-  const { switchNetwork } = useSwitchNetwork();
-  const { openModal } = useModal();
+  const { chain, chainId, isConnected, address } = useAccount();
+  const { chains } = useConfig();
+  const { switchChain } = useSwitchChain();
 
   const [account, setAccount] = useState<string | undefined>();
 
@@ -27,25 +20,17 @@ const useWallet = () => {
     setAccount(address);
   }, [address]);
 
-  const openConnectWalletModal = useCallback(() => {
-    openModal({
-      title: 'Connect Wallet',
-      component: () => <ConnectWalletModal></ConnectWalletModal>,
-    });
-  }, [openModal]);
-
   return {
+    isConnected,
     account,
     chain,
     chains,
+    chainId,
     connectors,
-    pendingConnector,
     error,
-    isLoading,
     connect,
     disconnect,
-    switchNetwork,
-    openConnectWalletModal,
+    switchChain,
   };
 };
 

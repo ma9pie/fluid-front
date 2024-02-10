@@ -2,18 +2,17 @@ import { Contract, ethers, parseEther, Signer } from 'ethers';
 import React, { useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
-import Fluid20ABI from '@/abis/Fluid.json';
-import StGASABI from '@/abis/StGAS.json';
 import BlastABI from '@/abis/Blast.json';
-
+import FluidABI from '@/abis/Fluid.json';
+import StGASABI from '@/abis/StGAS.json';
 import Button from '@/components/common/buttons/Button';
 import Flex from '@/components/common/Flex';
 import Layout from '@/components/layout/Layout';
 import {
-  blastSepoliaTestnet,
+  BLAST_CONTRACT_ADDRESS,
+  BLAST_SEPOLIA_TESTNET,
   FLUID_CONTRACT_ADDRESS,
   ST_GAS_CONTRACT_ADDRESS,
-  BLAST_CONTRACT_ADDRESS,
 } from '@/constants';
 import useWallet from '@/hooks/useWallet';
 
@@ -21,29 +20,28 @@ const Index = () => {
   const { account } = useWallet();
   const [stGASBalance, setStGASBalance] = useState<string>('plz update');
   const [fluidBalance, setFluidBalance] = useState<string>('plz update');
-  const [stGASTotalSupply, setStGASTotalSupply] = useState<string>('plz update');
-  const [fluidTotalSupply, setFluidTotalSupply] = useState<string>('plz update');
+  const [stGASTotalSupply, setStGASTotalSupply] =
+    useState<string>('plz update');
+  const [fluidTotalSupply, setFluidTotalSupply] =
+    useState<string>('plz update');
   const [stGASParams, setStGASParams] = useState<string>('plz update');
 
-
-  const [stakeFluidAmountInputValue, setStakeFluidAmountInputValue] = useState('');
+  const [stakeFluidAmountInputValue, setStakeFluidAmountInputValue] =
+    useState('');
 
   // 입력 필드가 변경될 때마다 호출되는 함수
-  const handleStakeFluidAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStakeFluidAmountInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setStakeFluidAmountInputValue(event.target.value);
   };
-
 
   // [example 1] - totalSupply 조회
   const runExample1 = async () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
 
-      const contract = new Contract(
-        FLUID_CONTRACT_ADDRESS,
-        Fluid20ABI,
-        provider
-      );
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, provider);
       const res = await contract.totalSupply();
       console.log(res);
     } catch (err) {
@@ -58,8 +56,11 @@ const Index = () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
-      const res = await contract.approve(signer.address, parseEther('100000000000000'));
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
+      const res = await contract.approve(
+        signer.address,
+        parseEther('100000000000000')
+      );
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -73,7 +74,7 @@ const Index = () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
       const res = await contract.mint();
       console.log(res);
     } catch (err) {
@@ -81,28 +82,20 @@ const Index = () => {
     }
   };
 
-  // 버튼 실행 로직을 구성해주세요.
-  const handleClick = async () => {
-    try {
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const runClaimReward = async () => {
     try {
       if (!account) return;
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
       const res = await contract.claim();
       console.log(res);
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   const runSetFluid = async () => {
     try {
       if (!account) return;
@@ -115,7 +108,8 @@ const Index = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   const runSetWhielistStGAS = async () => {
     try {
       if (!account) return;
@@ -128,7 +122,8 @@ const Index = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   const runAddRewardToFluid = async () => {
     try {
       if (!account) return;
@@ -141,7 +136,8 @@ const Index = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   const runStakeFluid = async () => {
     // 숫자로 변환
     let amountInput = Number(stakeFluidAmountInputValue);
@@ -154,7 +150,7 @@ const Index = () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
       const res = await contract.stake(amountInputBigInt);
       console.log(res);
     } catch (err) {
@@ -169,14 +165,15 @@ const Index = () => {
 
       const contract = new Contract(BLAST_CONTRACT_ADDRESS, BlastABI, signer);
       const gasParams = await contract.readGasParams(ST_GAS_CONTRACT_ADDRESS);
-      const res = gasParams[1]  / BigInt(1e10);
+      const res = gasParams[1] / BigInt(1e10);
       const resProcessed = Number(res) / 1e8;
       setStGASParams(resProcessed.toString());
       console.log(gasParams);
-    }  catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   const getStGASTotalSupply = async () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -187,23 +184,24 @@ const Index = () => {
       const resProcessed = Number(res) / 1e8;
       setStGASTotalSupply(resProcessed.toString());
       console.log(res);
-    }  catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   const getFluidTotalSupply = async () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
-      const res = (await contract.totalSupply() / BigInt(1e18));
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
+      const res = (await contract.totalSupply()) / BigInt(1e18);
       setFluidTotalSupply(res.toString());
       console.log(res);
-    }  catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const getStGASBalance = async () => {
     try {
@@ -215,23 +213,25 @@ const Index = () => {
       const resProcessed = Number(res) / 1e8;
       setStGASBalance(resProcessed.toString());
       console.log(res);
-    }  catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   const getFluidBalance = async () => {
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, Fluid20ABI, signer);
-      const res = (await contract.balanceOf(signer.address) / BigInt(1e18));
+      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
+      const res = (await contract.balanceOf(signer.address)) / BigInt(1e18);
       setFluidBalance(res.toString());
       console.log(res);
-    }  catch (err) {
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
+
   return (
     <Layout>
       <Flex col gap={16}>
@@ -243,16 +243,13 @@ const Index = () => {
         <div>{stGASTotalSupply}</div>
         <Button onClick={getStGASTotalSupply}> update stGAS totalSupply</Button>
 
-
         <div>Fluid totalSupply</div>
         <div>{fluidTotalSupply}</div>
         <Button onClick={getFluidTotalSupply}> update Fluid totalSupply</Button>
 
-
         <div>stGAS Balance</div>
         <div>{stGASBalance}</div>
         <Button onClick={getStGASBalance}> update stGAS Balance</Button>
-
 
         <div>Fluid Balance</div>
         <div>{fluidBalance}</div>
@@ -270,11 +267,12 @@ const Index = () => {
         <Button onClick={runClaimReward}>claim stGAS reward</Button>
 
         {/*<Button onClick={approveFluidToFluid}>approve Fluid to Fluid</Button>*/}
-        <Button onClick={runAddRewardToFluid}>add reward to Fluid staker</Button>
+        <Button onClick={runAddRewardToFluid}>
+          add reward to Fluid staker
+        </Button>
 
         {/*<Button onClick={runSetWhielistStGAS}>set whitelist stGAS</Button>*/}
         {/*<Button onClick={runSetFluid}>set fluid contract in stGAS</Button>*/}
-        <Button onClick={handleClick}>Run</Button>
       </Flex>
     </Layout>
   );

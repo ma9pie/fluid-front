@@ -1,5 +1,6 @@
-import { Button } from '@nextui-org/react';
 import React, { ReactNode } from 'react';
+
+import { Button } from '@/components/nextui';
 
 interface Props {
   className?: string;

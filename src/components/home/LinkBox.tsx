@@ -11,7 +11,6 @@ interface Props {
 
 const LinkBox = ({ href, title, desc }: Props) => {
   if (!href) return null;
-
   return (
     <Wrapper className="group">
       <Link href={href} target="_blank" rel="noopener noreferrer">
@@ -31,10 +30,7 @@ export default LinkBox;
 
 const Wrapper = styled.div`
   ${tw`rounded-lg border border-transparent px-5 py-4 transition-colors`};
-  &:hover {
-    ${tw`border-gray-300 bg-gray-100`};
-    ${tw`dark:(border-neutral-700 bg-neutral-800/30)`};
-  }
+  ${tw`dark:(border-neutral-700 bg-white)`};
 `;
 const TitleBox = styled.div`
   ${tw`flex items-center gap-2 mb-3`};
@@ -46,5 +42,7 @@ const Desc = styled.p`
   ${tw`m-0 max-w-[30ch] text-sm opacity-50`};
 `;
 const IconWrapper = styled.span`
-  ${tw`inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none`};
+  ${tw`inline-block transition-transform`};
+  ${tw`group-hover:translate-x-1`};
+  ${tw`motion-reduce:transform-none`};
 `;

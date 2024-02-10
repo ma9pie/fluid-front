@@ -1,24 +1,29 @@
 import '@/styles/globals.css';
 
-import { NextUIProvider } from '@nextui-org/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { ThemeProvider, useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
-import { WagmiConfig } from 'wagmi';
+import { WagmiProvider } from 'wagmi';
 
+import { NextUIProvider } from '@/components/nextui';
 import ModalProvider from '@/components/providers/ModalProvider';
 import { wagmiConfig } from '@/config';
 
+const queryClient = new QueryClient();
+
 const App = (props: AppProps) => {
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <NextUIProvider>
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          <Inner {...props}></Inner>
-        </ThemeProvider>
-      </NextUIProvider>
-    </WagmiConfig>
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <NextUIProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark">
+            <Inner {...props}></Inner>
+          </ThemeProvider>
+        </NextUIProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 };
 

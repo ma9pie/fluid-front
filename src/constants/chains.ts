@@ -1,4 +1,5 @@
-export const blastSepoliaTestnet = {
+export const CHAIN_ID = 168587773;
+export const BLAST_SEPOLIA_TESTNET = {
   id: 168587773,
   name: 'Blast Sepolia Testnet',
   network: 'Blast Sepolia Testnet',
