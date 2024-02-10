@@ -22,7 +22,7 @@ const Component = (props: ModalProps) => {
       >
         <ModalContent>
           <ModalHeader title={title}></ModalHeader>
-          <ModalBody className="px-4 pt-0 pb-4">
+          <ModalBody className="px-4 pt-0 pb-8">
             {component && component()}
           </ModalBody>
         </ModalContent>
@@ -35,7 +35,4 @@ export default Component;
 
 const Container = styled.div`
   ${tw`relative`};
-`;
-const Overlay = styled.div`
-  ${tw`absolute top-0 left-0 w-screen h-screen border border-solid border-red-500 z-[50]`};
 `;
