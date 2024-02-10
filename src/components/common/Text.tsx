@@ -13,7 +13,14 @@ interface Props {
   md?: boolean;
   lg?: boolean;
   xl?: boolean;
-  xxl?: boolean;
+  _2xl?: boolean;
+  _3xl?: boolean;
+  _4xl?: boolean;
+  _5xl?: boolean;
+  _6xl?: boolean;
+  _7xl?: boolean;
+  _8xl?: boolean;
+  _9xl?: boolean;
 
   medium?: boolean;
   semibold?: boolean;
@@ -46,7 +53,14 @@ const Text = ({
   md,
   lg,
   xl,
-  xxl,
+  _2xl,
+  _3xl,
+  _4xl,
+  _5xl,
+  _6xl,
+  _7xl,
+  _8xl,
+  _9xl,
 
   medium,
   semibold,
@@ -81,7 +95,14 @@ const Text = ({
       md={md}
       lg={lg}
       xl={xl}
-      xxl={xxl}
+      _2xl={_2xl}
+      _3xl={_3xl}
+      _4xl={_4xl}
+      _5xl={_5xl}
+      _6xl={_6xl}
+      _7xl={_7xl}
+      _8xl={_8xl}
+      _9xl={_9xl}
       medium={medium}
       semibold={semibold}
       bold={bold}
@@ -112,7 +133,14 @@ const P = styled.p<Props>`
   ${(props) => props.md && tw`text-base`};
   ${(props) => props.lg && tw`text-lg`};
   ${(props) => props.xl && tw`text-xl`};
-  ${(props) => props.xxl && tw`text-2xl`};
+  ${(props) => props._2xl && tw`text-2xl`};
+  ${(props) => props._3xl && tw`text-3xl`};
+  ${(props) => props._4xl && tw`text-4xl`};
+  ${(props) => props._5xl && tw`text-5xl`};
+  ${(props) => props._6xl && tw`text-6xl`};
+  ${(props) => props._7xl && tw`text-7xl`};
+  ${(props) => props._8xl && tw`text-8xl`};
+  ${(props) => props._9xl && tw`text-9xl`};
 
   ${(props) => props.medium && tw`font-medium`};
   ${(props) => props.semibold && tw`font-semibold`};
