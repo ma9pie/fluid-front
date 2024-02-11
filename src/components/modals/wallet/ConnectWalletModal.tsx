@@ -4,6 +4,7 @@ import { MdAccountBalanceWallet } from 'react-icons/md';
 import tw, { styled } from 'twin.macro';
 
 import Text from '@/components/common/Text';
+import { CHAIN_ID } from '@/constants';
 import useModal from '@/hooks/useModal';
 import useWallet from '@/hooks/useWallet';
 import { WalletType } from '@/types';
@@ -11,7 +12,7 @@ import { WalletType } from '@/types';
 const ICON_SIZE = 64;
 
 const ConnectWalletModal = () => {
-  const { account, connectors, error, connect } = useWallet();
+  const { account, connectors, error, connect, switchChain } = useWallet();
   const { closeModal } = useModal();
 
   useEffect(() => {
@@ -34,7 +35,15 @@ const ConnectWalletModal = () => {
             const { id, name } = connector;
 
             return (
-              <WalletBox key={id} onClick={() => connect({ connector })}>
+              <WalletBox
+                key={id}
+                onClick={() =>
+                  connect({
+                    chainId: CHAIN_ID,
+                    connector,
+                  })
+                }
+              >
                 <IconBox size={ICON_SIZE}>
                   {name === WalletType.MetaMask && (
                     <Image
@@ -99,5 +108,5 @@ const Grid = styled.div<{ size: number }>`
   grid-template-columns: ${(props) => `repeat(auto-fill, ${props.size}px)`};
 `;
 const ErrorBox = styled.div`
-  ${tw`min-h-[20px]`};
+  ${tw`min-h-[32px]`};
 `;
