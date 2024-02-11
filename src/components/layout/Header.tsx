@@ -6,6 +6,7 @@ import tw, { styled } from 'twin.macro';
 import ChainButton from '@/components/common/buttons/ChainButton';
 import ConnectWalletBtn from '@/components/common/buttons/ConnectWalletBtn';
 import Flex from '@/components/common/Flex';
+import Img from '@/components/common/Img';
 import ResponsiveView from '@/components/common/ResponsiveView';
 import Text from '@/components/common/Text';
 import ThemeToggle from '@/components/common/ThemeToggle';
@@ -30,11 +31,9 @@ const Header = () => {
     <Wrapper>
       <Container>
         <LinkContainer>
-          <Link href="/">
-            <Text _3xl bold>
-              LOGO
-            </Text>
-          </Link>
+          <LogoWrapper href="/">
+            <Img src="/images/logo/logo.svg" width={48} height={48}></Img>
+          </LogoWrapper>
 
           <ResponsiveView
             desktop={
@@ -108,6 +107,9 @@ const MenuContainer = styled.div`
 `;
 const ButtonContainer = styled.div`
   ${tw`flex items-center gap-2`};
+`;
+const LogoWrapper = styled(Link)`
+  ${tw`p-2`};
 `;
 const Menu = styled.div<{ selected: boolean }>`
   ${tw`text-lg font-bold text-white px-4 py-2`};
