@@ -30,7 +30,10 @@ export default LinkBox;
 
 const Wrapper = styled.div`
   ${tw`rounded-lg border border-transparent px-5 py-4 transition-colors`};
-  ${tw`dark:(border-neutral-700 bg-white)`};
+  ${tw`hover:(border-gray-300 bg-gray-100)`};
+  ${tw`hover:dark:(border-neutral-700 bg-neutral-800/30)`};
+  &:hover {
+  }
 `;
 const TitleBox = styled.div`
   ${tw`flex items-center gap-2 mb-3`};

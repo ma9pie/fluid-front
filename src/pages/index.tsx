@@ -58,6 +58,6 @@ const ContentWrapper = styled.div`
   ${tw`relative flex justify-center items-center min-h-[360px]`};
 `;
 const LinkContainer = styled.div`
-  ${tw`grid`};
+  ${tw`grid gap-4`};
   ${tw`lg:(max-w-5xl w-full mb-0 grid-cols-4 text-left)`};
 `;
