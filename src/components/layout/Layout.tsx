@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import tw, { styled } from 'twin.macro';
 
+import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 
 interface Props {
@@ -12,6 +13,7 @@ const Layout = ({ children }: Props) => {
     <Wrapper>
       <Header></Header>
       <Content>{children}</Content>
+      <Footer></Footer>
     </Wrapper>
   );
 };
