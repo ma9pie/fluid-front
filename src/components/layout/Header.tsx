@@ -92,7 +92,9 @@ const Header = () => {
 export default Header;
 
 const Wrapper = styled.div`
-  ${tw`w-full h-16`};
+  ${tw`w-full h-16 border-b border-solid`};
+  ${tw`border-neutral-100`};
+  ${tw`dark:border-neutral-900`};
 `;
 const Container = styled.div`
   ${tw`flex justify-between items-center gap-6 h-16 px-6`};
