@@ -26,6 +26,7 @@ const ThemeToggle = () => {
   return (
     <Toggle
       size="lg"
+      color="default"
       isSelected={isSelected}
       icon={isSelected ? <FiMoon></FiMoon> : <FiSun></FiSun>}
       onChange={handleChange}
