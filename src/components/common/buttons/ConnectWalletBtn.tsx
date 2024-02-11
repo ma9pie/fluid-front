@@ -29,5 +29,5 @@ export default ConnectWalletBtn;
 
 const Wrapper = styled.div`
   ${tw`w-full`};
-  ${tw`sm:w-32`};
+  ${tw`md:w-32`};
 `;

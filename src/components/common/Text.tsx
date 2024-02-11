@@ -25,6 +25,7 @@ interface Props {
   medium?: boolean;
   semibold?: boolean;
   bold?: boolean;
+  extrabold?: boolean;
 
   black?: boolean;
   white?: boolean;
@@ -65,6 +66,7 @@ const Text = ({
   medium,
   semibold,
   bold,
+  extrabold,
 
   black,
   white,
@@ -106,6 +108,7 @@ const Text = ({
       medium={medium}
       semibold={semibold}
       bold={bold}
+      extrabold={extrabold}
       black={black}
       white={white}
       inline={inline}
@@ -145,6 +148,7 @@ const P = styled.p<Props>`
   ${(props) => props.medium && tw`font-medium`};
   ${(props) => props.semibold && tw`font-semibold`};
   ${(props) => props.bold && tw`font-bold`};
+  ${(props) => props.extrabold && tw`font-extrabold`};
 
   ${(props) => props.black && tw`text-black`};
   ${(props) => props.white && tw`text-white`};

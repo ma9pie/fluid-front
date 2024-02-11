@@ -24,5 +24,5 @@ const Wrapper = styled.main`
 const Content = styled.div`
   ${tw`flex flex-col flex-1`};
   ${tw`px-4 py-12`};
-  ${tw`sm:(px-6 py-24)`};
+  ${tw`md:(px-6 py-24)`};
 `;

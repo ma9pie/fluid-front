@@ -9,21 +9,21 @@ interface Props {
 
 const ResponsiveView = ({ className, mobile, desktop }: Props) => {
   return (
-    <div className={className}>
+    <>
       {/* mobile */}
-      <Mobile>{mobile}</Mobile>
+      <Mobile className={className}>{mobile}</Mobile>
       {/* tablet */}
-      <Desktop>{desktop}</Desktop>
-    </div>
+      <Desktop className={className}>{desktop}</Desktop>
+    </>
   );
 };
 
 export default React.memo(ResponsiveView);
 
 const Mobile = styled.div`
-  ${tw`sm:hidden`};
+  ${tw`md:hidden`};
 `;
 const Desktop = styled.div`
   ${tw`hidden`};
-  ${tw`sm:block`};
+  ${tw`md:block`};
 `;

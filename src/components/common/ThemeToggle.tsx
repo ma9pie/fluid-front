@@ -1,6 +1,7 @@
 import { useTheme } from 'next-themes';
 import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
+import tw, { styled } from 'twin.macro';
 
 import Toggle from '@/components/common/Toggle';
 import { Theme } from '@/types';
@@ -29,9 +30,10 @@ const ThemeToggle = () => {
     }
   };
 
-  if (!mounted) return null;
+  if (!mounted) return <BlankBox></BlankBox>;
   return (
     <Toggle
+      className="m-0"
       size="lg"
       color="default"
       isSelected={isSelected}
@@ -42,3 +44,7 @@ const ThemeToggle = () => {
 };
 
 export default ThemeToggle;
+
+const BlankBox = styled.div`
+  ${tw`w-16`};
+`;
