@@ -1,7 +1,6 @@
 import React, { ChangeEvent } from 'react';
 
 import { Input } from '@/components/nextui';
-import { trimZero, validateNumber } from '@/utils';
 
 interface Props {
   className?: string;
@@ -9,22 +8,19 @@ interface Props {
   placeholder?: string;
   value: string;
   disabled?: boolean;
-  maxDecimals?: number;
   onChange: (value: string) => void;
 }
 
-const NumberInput = ({
+const AddressInput = ({
   className,
   label,
-  placeholder,
+  placeholder = '0x0000000000000000000000000000000000000000',
   value,
   disabled,
-  maxDecimals,
   onChange,
 }: Props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = trimZero(e.target.value.trim());
-    if (!validateNumber(value, maxDecimals)) return;
+    const value = e.target.value.trim();
     onChange(value);
   };
 
@@ -33,7 +29,6 @@ const NumberInput = ({
       className={className}
       type="text"
       label={label}
-      inputMode="decimal"
       placeholder={placeholder}
       value={value}
       disabled={disabled}
@@ -42,4 +37,4 @@ const NumberInput = ({
   );
 };
 
-export default NumberInput;
+export default AddressInput;
