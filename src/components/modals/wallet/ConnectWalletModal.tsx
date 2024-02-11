@@ -90,7 +90,7 @@ const WalletBox = styled.div`
 const IconBox = styled.div<{ size: number }>`
   ${tw`relative flex justify-center items-center border-2 border-solid rounded-xl cursor-pointer`};
   ${tw`border-neutral-300`};
-  ${tw`dark:border-neutral-800`};
+  ${tw`dark:border-neutral-700`};
   width: ${(props) => `${props.size}px`};
   height: ${(props) => `${props.size}px`};
 `;

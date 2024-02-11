@@ -1,5 +1,5 @@
 import { useTheme } from 'next-themes';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { FiMoon, FiSun } from 'react-icons/fi';
 
 import Toggle from '@/components/common/Toggle';
@@ -10,7 +10,7 @@ const ThemeToggle = () => {
 
   const [mounted, setMounted] = useState(false);
 
-  const isSelected = theme === Theme.Dark;
+  const isSelected = useMemo(() => theme === Theme.Dark, [theme]);
 
   useEffect(() => {
     setMounted(true);
@@ -18,11 +18,18 @@ const ThemeToggle = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
-    setTheme(checked ? Theme.Dark : Theme.Light);
+    if (checked) {
+      document.documentElement.setAttribute('data-theme', Theme.Dark);
+      localStorage.setItem('theme', Theme.Dark);
+      setTheme(Theme.Dark);
+    } else {
+      setTheme(Theme.Light);
+      document.documentElement.setAttribute('data-theme', Theme.Light);
+      localStorage.setItem('theme', Theme.Light);
+    }
   };
 
   if (!mounted) return null;
-
   return (
     <Toggle
       size="lg"

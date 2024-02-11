@@ -17,7 +17,7 @@ const ConnectWalletBtn = () => {
           {ellipsis(account)}
         </Button>
       ) : (
-        <Button full color="primary" onClick={openConnectWalletModal}>
+        <Button full onClick={openConnectWalletModal}>
           Connect Wallet
         </Button>
       )}
@@ -28,5 +28,6 @@ const ConnectWalletBtn = () => {
 export default ConnectWalletBtn;
 
 const Wrapper = styled.div`
-  ${tw`w-32`};
+  ${tw`w-full`};
+  ${tw`sm:w-32`};
 `;

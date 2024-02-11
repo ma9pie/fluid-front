@@ -1,5 +1,6 @@
 import '@/styles/globals.css';
 
+import { NextUIProvider } from '@nextui-org/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { ThemeProvider, useTheme } from 'next-themes';
@@ -7,7 +8,6 @@ import { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 import { WagmiProvider } from 'wagmi';
 
-import { NextUIProvider } from '@/components/nextui';
 import ModalProvider from '@/components/providers/ModalProvider';
 import { wagmiConfig } from '@/config';
 
@@ -17,11 +17,11 @@ const App = (props: AppProps) => {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <NextUIProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark">
+        <ThemeProvider attribute="class" enableSystem={false}>
+          <NextUIProvider>
             <Inner {...props}></Inner>
-          </ThemeProvider>
-        </NextUIProvider>
+          </NextUIProvider>
+        </ThemeProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
