@@ -8,11 +8,145 @@ const {
 } = require('@/utils');
 
 describe('ellipsis test', () => {
-  test('', () => {});
+  test('', () => {
+    const result = ellipsis('');
+    expect(result).toEqual('');
+  });
+  test('', () => {
+    const result = ellipsis(null);
+    expect(result).toEqual('');
+  });
+  test('', () => {
+    const result = ellipsis(undefined);
+    expect(result).toEqual('');
+  });
+  test('', () => {
+    const result = ellipsis('abc');
+    expect(result).toEqual('abc');
+  });
+  test('', () => {
+    const result = ellipsis('abcdef');
+    expect(result).toEqual('abcdef');
+  });
+  test('', () => {
+    const result = ellipsis('1234567890');
+    expect(result).toEqual('1234567890');
+  });
+  test('', () => {
+    const result = ellipsis('12345abc12345');
+    expect(result).toEqual('12345...12345');
+  });
+  test('', () => {
+    const result = ellipsis('011234567890abcd');
+    expect(result).toEqual('01123...0abcd');
+  });
+  test('', () => {
+    const result = ellipsis('0a1234567890abcd');
+    expect(result).toEqual('0a123...0abcd');
+  });
+  test('', () => {
+    const result = ellipsis('abcdefghijklmnopqrstuvwxyz');
+    expect(result).toEqual('abcde...vwxyz');
+  });
+  test('', () => {
+    const result = ellipsis('0x1234567890abcd', 2, 3);
+    expect(result).toEqual('0x...bcd');
+  });
+  test('', () => {
+    const result = ellipsis('0x1234567890abcd', 2);
+    expect(result).toEqual('0x...0abcd');
+  });
+  test('', () => {
+    const result = ellipsis('0x1234567890abcd', 0, 0);
+    expect(result).toEqual('0x1234567890abcd');
+  });
+  test('', () => {
+    const result = ellipsis('0x1234567890abcd', 0, 0);
+    expect(result).toEqual('0x1234567890abcd');
+  });
+  test('', () => {
+    const result = ellipsis('abced', 20, 3);
+    expect(result).toEqual('abced');
+  });
+  test('', () => {
+    const result = ellipsis('ABCDEFG12345', 6, 6);
+    expect(result).toEqual('ABCDEFG12345');
+  });
 });
 
 describe('numberToString test', () => {
-  test('', () => {});
+  test('', () => {
+    const result = numberToString(0);
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = numberToString('0');
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = numberToString(null);
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = numberToString(undefined);
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = numberToString('test');
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = numberToString(123);
+    expect(result).toEqual('123');
+  });
+  test('', () => {
+    const result = numberToString(-123);
+    expect(result).toEqual('-123');
+  });
+  test('', () => {
+    const result = numberToString(1e-7);
+    expect(result).toEqual('0.0000001');
+  });
+  test('', () => {
+    const result = numberToString('1e-7');
+    expect(result).toEqual('0.0000001');
+  });
+  test('', () => {
+    const result = numberToString('1e-18');
+    expect(result).toEqual('0.000000000000000001');
+  });
+  test('', () => {
+    const result = numberToString(1e-10);
+    expect(result).toEqual('0.0000000001');
+  });
+  test('', () => {
+    const result = numberToString(1e-18);
+    expect(result).toEqual('0.000000000000000001');
+  });
+  test('', () => {
+    const result = numberToString('1e18');
+    expect(result).toEqual('1000000000000000000');
+  });
+  test('', () => {
+    const result = numberToString(1e18);
+    expect(result).toEqual('1000000000000000000');
+  });
+  test('', () => {
+    const result = numberToString('1e21');
+    expect(result).toEqual('1000000000000000000000');
+  });
+  test('', () => {
+    const result = numberToString(1e21);
+    expect(result).toEqual('1000000000000000000000');
+  });
+  test('', () => {
+    const result = numberToString(1.23e-5);
+    expect(result).toEqual('0.0000123');
+  });
+  test('', () => {
+    const result = numberToString(-1e20);
+    expect(result).toEqual('-100000000000000000000');
+  });
 });
 
 describe('trimZero test', () => {
@@ -170,7 +304,79 @@ describe('comma test', () => {
 });
 
 describe('decomma test', () => {
-  test('', () => {});
+  test('', () => {
+    const result = decomma('');
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = decomma(0);
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = decomma('0');
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = decomma(null);
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = decomma(undefined);
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = decomma('test');
+    expect(result).toEqual('0');
+  });
+
+  test('', () => {
+    const result = decomma('1,000');
+    expect(result).toEqual('1000');
+  });
+  test('', () => {
+    const result = decomma('-2,500');
+    expect(result).toEqual('-2500');
+  });
+  test('', () => {
+    const result = decomma('3,456.789');
+    expect(result).toEqual('3456.789');
+  });
+  test('', () => {
+    const result = decomma('-1,234.567');
+    expect(result).toEqual('-1234.567');
+  });
+  test('', () => {
+    const result = decomma('1,000,000,000,000');
+    expect(result).toEqual('1000000000000');
+  });
+  test('', () => {
+    const result = decomma('0.0000000001');
+    expect(result).toEqual('0.0000000001');
+  });
+  test('', () => {
+    const result = decomma('1.23e-5');
+    expect(result).toEqual('0.0000123');
+  });
+  test('', () => {
+    const result = decomma(1.23e-5);
+    expect(result).toEqual('0.0000123');
+  });
+  test('', () => {
+    const result = decomma(4e3);
+    expect(result).toEqual('4000');
+  });
+  test('', () => {
+    const result = decomma('-1,000,000,000,000,000,000');
+    expect(result).toEqual('-1000000000000000000');
+  });
+  test('', () => {
+    const result = decomma(1e18);
+    expect(result).toEqual('1000000000000000000');
+  });
+  test('', () => {
+    const result = decomma(1e-18);
+    expect(result).toEqual('0.000000000000000001');
+  });
 });
 
 describe('floor test', () => {

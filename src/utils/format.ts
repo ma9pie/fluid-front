@@ -1,5 +1,7 @@
 import Big from 'big.js';
 
+type Num = number | string | undefined | null;
+
 /**
  * 문자열 중략
  * ABCDEFG12345 => "ABCDE...12345"
@@ -9,8 +11,12 @@ export const ellipsis = (
   head: number = 5,
   tail: number = 5
 ) => {
-  if (!address || head < 0 || tail < 0) return '';
-  if (head === 0 && tail === 0) return address;
+  if (!address || head < 0 || tail < 0) {
+    return '';
+  }
+  if (head === 0 || address.length <= head + tail) {
+    return address;
+  }
   return address.slice(0, head) + '...' + address.slice(-tail);
 };
 
@@ -19,7 +25,7 @@ export const ellipsis = (
  * 1e7 => "10000000"
  * 1e-7 => "0.0000001"
  */
-export const numberToString = (num: number | string | undefined) => {
+export const numberToString = (num: Num) => {
   if (!num || isNaN(Number(num))) {
     return '0';
   }
@@ -44,11 +50,8 @@ export const trimZero = (value: string) => {
  * 콤마 추가
  * 1000000 => "1,000,000"
  */
-export const comma = (
-  number: number | string | undefined,
-  precision?: number
-) => {
-  let value = numberToString(number).split('.');
+export const comma = (num: Num, precision?: number) => {
+  let value = numberToString(num).split('.');
   if (precision !== undefined && value[1]) {
     value[1] = value[1].substring(0, precision);
   }
@@ -63,16 +66,22 @@ export const comma = (
  * 콤마 제거
  * "1,000,000" => "1000000"
  */
-export const decomma = (number: number | string | undefined) => {
-  if (!number) return '0';
-  return number.toString().replace(/,/g, '');
+export const decomma = (num: Num) => {
+  if (!num) {
+    return '0';
+  }
+  const _num = num.toString().replace(/,/g, '');
+  if (isNaN(Number(_num))) {
+    return '0';
+  }
+  return new Big(_num).toFixed();
 };
 
 /**
  * 소수점 버림 처리
  * floor(0.1234,2) => "0.12"
  */
-export const floor = (num: number | string | undefined, precision?: number) => {
+export const floor = (num: Num, precision?: number) => {
   const value = numberToString(num);
   let [integer, digits] = value.split('.');
   if (precision === 0) return integer;
