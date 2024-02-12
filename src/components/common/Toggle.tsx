@@ -1,4 +1,5 @@
 import React, { ChangeEvent, ReactNode } from 'react';
+import { styled } from 'twin.macro';
 
 import { Switch } from '@/components/nextui';
 
@@ -26,15 +27,21 @@ const Toggle = ({
   onChange,
 }: Props) => {
   return (
-    <Switch
+    <Wrapper
       className={className}
       isSelected={isSelected}
       size={size}
       color={color}
       thumbIcon={icon}
       onChange={onChange}
-    ></Switch>
+    ></Wrapper>
   );
 };
 
 export default Toggle;
+
+const Wrapper = styled(Switch)`
+  span {
+    margin: 0px;
+  }
+`;
