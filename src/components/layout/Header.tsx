@@ -99,7 +99,9 @@ const Wrapper = styled.div`
   ${tw`dark:border-neutral-900`};
 `;
 const Container = styled.div`
-  ${tw`flex justify-between items-center gap-6 h-16 px-6`};
+  ${tw`flex justify-between items-center gap-6 h-16`};
+  ${tw`px-4`};
+  ${tw`md:px-6`};
 `;
 const LinkContainer = styled.div`
   ${tw`flex items-center gap-8`};

@@ -25,7 +25,9 @@ const Footer = () => {
 export default Footer;
 
 const Wrapper = styled.div`
-  ${tw`flex justify-between items-center h-12 px-6 border-t border-solid`};
+  ${tw`flex justify-between items-center flex-wrap h-12 border-t border-solid`};
+  ${tw`px-4`};
+  ${tw`md:px-6`};
   ${tw`border-neutral-100`};
   ${tw`dark:border-neutral-900`};
 `;
