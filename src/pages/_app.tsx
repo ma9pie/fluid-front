@@ -11,6 +11,7 @@ import { WagmiProvider } from 'wagmi';
 
 import ModalProvider from '@/components/providers/ModalProvider';
 import { wagmiConfig } from '@/config';
+import { IS_PRODUCTION } from '@/constants';
 import useGA4 from '@/hooks/useGA4';
 
 const queryClient = new QueryClient();
@@ -57,7 +58,7 @@ const Inner = ({ Component, pageProps }: AppProps) => {
 
   // Production 콘솔 제거
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_MODE === 'production') {
+    if (IS_PRODUCTION) {
       console.log = () => {};
     }
   }, []);

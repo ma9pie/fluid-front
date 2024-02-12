@@ -8,8 +8,10 @@ import Layout from '@/components/layout/Layout';
 import { Card } from '@/components/nextui';
 import { ETH, FLUID, STGAS } from '@/constants';
 import useModal from '@/hooks/useModal';
+import usePageAccess from '@/hooks/usePageAccess';
 
 const Components = () => {
+  const { isShow } = usePageAccess();
   const { openTxSuccessModal, openTxFailedModal, openTxWaitingModal } =
     useModal();
 
@@ -17,6 +19,7 @@ const Components = () => {
   const [amountOfFluid, setAmountOfFluid] = useState('');
   const [amountOfStGas, setAmountOfStGas] = useState('');
 
+  if (!isShow) return null;
   return (
     <Layout>
       <Container>

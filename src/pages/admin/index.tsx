@@ -6,10 +6,14 @@ import Divider from '@/components/common/Divider';
 import Flex from '@/components/common/Flex';
 import Text from '@/components/common/Text';
 import Layout from '@/components/layout/Layout';
+import usePageAccess from '@/hooks/usePageAccess';
 import useTailwindColor from '@/hooks/useTailwindColor';
 import { Theme } from '@/types';
 
 const Test = () => {
+  const { isShow } = usePageAccess();
+
+  if (!isShow) return null;
   return (
     <Layout>
       <Flex col gap={24}>

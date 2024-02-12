@@ -14,10 +14,13 @@ import {
   FLUID_CONTRACT_ADDRESS,
   ST_GAS_CONTRACT_ADDRESS,
 } from '@/constants';
+import usePageAccess from '@/hooks/usePageAccess';
 import useWallet from '@/hooks/useWallet';
 
 const Index = () => {
   const { account } = useWallet();
+  const { isShow } = usePageAccess();
+
   const [stGASBalance, setStGASBalance] = useState<string>('plz update');
   const [fluidBalance, setFluidBalance] = useState<string>('plz update');
   const [stGASTotalSupply, setStGASTotalSupply] =
@@ -232,6 +235,7 @@ const Index = () => {
     }
   };
 
+  if (!isShow) return null;
   return (
     <Layout>
       <Flex col gap={16}>
