@@ -34,7 +34,7 @@ const Flex = ({
         gap: gap,
       }}
       col={col}
-      wrap={wrap}
+      $wrap={wrap}
       justify={justify}
       items={items}
       onClick={onClick}
@@ -46,10 +46,17 @@ const Flex = ({
 
 export default Flex;
 
-const Wrapper = styled.div<Props>`
+const Wrapper = styled.div<{
+  flex?: number;
+  col?: boolean;
+  $wrap?: boolean;
+  gap?: number;
+  justify?: Position;
+  items?: Position;
+}>`
   ${tw`flex`};
   ${(props) => props.col && tw`flex-col`};
-  ${(props) => props.wrap && tw`flex-wrap`};
+  ${(props) => props.$wrap && tw`flex-wrap`};
   ${(props) => {
     switch (props.justify) {
       case 'start':
