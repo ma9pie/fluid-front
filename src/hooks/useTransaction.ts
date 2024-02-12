@@ -21,6 +21,7 @@ const useTransaction = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // Tx 실행
   const runTx = async ({ txFn, onAfterTx = () => {} }: RunTx) => {
     try {
       if (!account) return;
