@@ -34,7 +34,7 @@ const ClaimReward = () => {
   }, [isLoading, account]);
 
   // Claim reward
-  const handleClick = async () => {
+  const handleClick = () => {
     runTx({
       txFn: () => claimReward(),
       onAfterTx: () => {

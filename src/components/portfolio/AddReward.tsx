@@ -41,7 +41,7 @@ const AddReward = () => {
   };
 
   // Add reward
-  const handleClick = async () => {
+  const handleClick = () => {
     runTx({
       txFn: () => addReward(),
     });

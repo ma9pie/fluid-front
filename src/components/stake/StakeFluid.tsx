@@ -83,7 +83,7 @@ const StakeFluid = () => {
   };
 
   // Stake
-  const handleClick = async () => {
+  const handleClick = () => {
     const parsedAmount = parseEther(amount);
     runTx({
       txFn: () => stakeFluid(parsedAmount),

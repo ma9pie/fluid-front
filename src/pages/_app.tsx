@@ -21,7 +21,9 @@ const App = (props: AppProps) => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" enableSystem={false}>
           <NextUIProvider>
-            <Inner {...props}></Inner>
+            <ModalProvider>
+              <Inner {...props}></Inner>
+            </ModalProvider>
           </NextUIProvider>
         </ThemeProvider>
       </QueryClientProvider>
@@ -53,11 +55,16 @@ const Inner = ({ Component, pageProps }: AppProps) => {
     trackPageView(router.pathname);
   }, [router.pathname]);
 
+  // Production 콘솔 제거
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_MODE === 'production') {
+      console.log = () => {};
+    }
+  }, []);
+
   return (
     <Wrapper className={className}>
-      <ModalProvider>
-        <Component {...pageProps}></Component>
-      </ModalProvider>
+      <Component {...pageProps}></Component>
     </Wrapper>
   );
 };

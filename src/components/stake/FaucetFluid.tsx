@@ -55,7 +55,7 @@ const FaucetFluid = () => {
   };
 
   // Faucet fluid
-  const handleClick = async () => {
+  const handleClick = () => {
     runTx({
       txFn: () => faucetFluid(),
       onAfterTx: () => {
