@@ -19,7 +19,7 @@ export const ellipsis = (
  * 1e7 => "10000000"
  * 1e-7 => "0.0000001"
  */
-export const numberToString = (num: number | string) => {
+export const numberToString = (num: number | string | undefined) => {
   if (!num || isNaN(Number(num))) {
     return '0';
   }
@@ -44,7 +44,10 @@ export const trimZero = (value: string) => {
  * 콤마 추가
  * 1000000 => "1,000,000"
  */
-export const comma = (number: number | string, precision?: number) => {
+export const comma = (
+  number: number | string | undefined,
+  precision?: number
+) => {
   let value = numberToString(number).split('.');
   if (precision !== undefined && value[1]) {
     value[1] = value[1].substring(0, precision);
@@ -60,7 +63,7 @@ export const comma = (number: number | string, precision?: number) => {
  * 콤마 제거
  * "1,000,000" => "1000000"
  */
-export const decomma = (number: number | string) => {
+export const decomma = (number: number | string | undefined) => {
   if (!number) return '0';
   return number.toString().replace(/,/g, '');
 };
@@ -69,7 +72,7 @@ export const decomma = (number: number | string) => {
  * 소수점 버림 처리
  * floor(0.1234,2) => "0.12"
  */
-export const floor = (num: number | string, precision?: number) => {
+export const floor = (num: number | string | undefined, precision?: number) => {
   const value = numberToString(num);
   let [integer, digits] = value.split('.');
   if (precision === 0) return integer;
