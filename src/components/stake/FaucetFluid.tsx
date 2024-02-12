@@ -1,38 +1,28 @@
-import { Contract, isAddress } from 'ethers';
+import { isAddress } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
-import FluidABI from '@/abis/Fluid.json';
 import TxRunButton from '@/components/common/buttons/TxRunButton';
 import Flex from '@/components/common/Flex';
 import AddressInput from '@/components/common/inputs/AddressInput';
 import Spacing from '@/components/common/Spacing';
 import Text from '@/components/common/Text';
 import { Card } from '@/components/nextui';
-import { FLUID_CONTRACT_ADDRESS } from '@/constants';
 import { FLUID } from '@/constants';
 import useContract from '@/hooks/useContract';
-import useEthers from '@/hooks/useEthers';
-import useModal from '@/hooks/useModal';
 import useTokenBalance from '@/hooks/useTokenBalance';
+import useTransaction from '@/hooks/useTransaction';
 import useWallet from '@/hooks/useWallet';
 
 const FaucetFluid = () => {
   const { account } = useWallet();
-  const { getTxReceipt } = useContract();
-  const { signer } = useEthers();
+  const { isLoading, runTx } = useTransaction();
+  const { faucetFluid } = useContract();
   const { refetch: refetchFluidBalance } = useTokenBalance({
     token: FLUID,
   });
-  const {
-    openTxSuccessModal,
-    openTxFailedModal,
-    openTxWaitingModal,
-    changeModal,
-  } = useModal();
 
   const [address, setAddress] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
   const [buttonText, setButtonText] = useState('Faucet');
 
@@ -64,32 +54,15 @@ const FaucetFluid = () => {
     setAddress('');
   };
 
-  // Faucet
-  const faucet = async () => {
-    try {
-      if (!account) return;
-      setIsLoading(true);
-      openTxWaitingModal();
-
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
-
-      const { hash } = await contract.mint();
-      const receipt = await getTxReceipt(hash);
-      console.log(receipt);
-
-      changeModal(() =>
-        openTxSuccessModal({
-          txHash: hash,
-        })
-      );
-      refetchFluidBalance();
-      resetInputs();
-    } catch (err) {
-      console.log(err);
-      changeModal(() => openTxFailedModal());
-    } finally {
-      setIsLoading(false);
-    }
+  // Faucet fluid
+  const handleClick = async () => {
+    runTx({
+      txFn: () => faucetFluid(),
+      onAfterTx: () => {
+        refetchFluidBalance();
+        resetInputs();
+      },
+    });
   };
 
   return (
@@ -111,7 +84,7 @@ const FaucetFluid = () => {
         buttonText={buttonText}
         isLoading={isLoading}
         disabled={disableButton}
-        onClick={faucet}
+        onClick={handleClick}
       ></TxRunButton>
     </Wrapper>
   );

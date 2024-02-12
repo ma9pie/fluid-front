@@ -1,34 +1,24 @@
-import { Contract, formatUnits } from 'ethers';
+import { formatUnits } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
-import StGASABI from '@/abis/StGAS.json';
 import TxRunButton from '@/components/common/buttons/TxRunButton';
 import Flex from '@/components/common/Flex';
 import Spacing from '@/components/common/Spacing';
 import Text from '@/components/common/Text';
 import { Card } from '@/components/nextui';
-import { FLUID, ST_GAS_CONTRACT_ADDRESS } from '@/constants';
+import { FLUID } from '@/constants';
 import useContract from '@/hooks/useContract';
-import useEthers from '@/hooks/useEthers';
-import useModal from '@/hooks/useModal';
+import useTransaction from '@/hooks/useTransaction';
 import useWallet from '@/hooks/useWallet';
 import { comma } from '@/utils';
 
 const AddReward = () => {
   const { account } = useWallet();
-  const { signer } = useEthers();
-  const { getTxReceipt, getTotalStakedFluid } = useContract();
-  const {
-    openTxSuccessModal,
-    openTxFailedModal,
-    openTxWaitingModal,
-    changeModal,
-  } = useModal();
+  const { isLoading, runTx } = useTransaction();
+  const { getTotalStakedFluid, addReward } = useContract();
 
   const [stakedFluid, setStakedFluid] = useState('0');
-
-  const [isLoading, setIsLoading] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
 
   useEffect(() => {
@@ -51,29 +41,10 @@ const AddReward = () => {
   };
 
   // Add reward
-  const addReward = async () => {
-    try {
-      if (!account) return;
-      setIsLoading(true);
-      openTxWaitingModal();
-
-      const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
-
-      const { hash } = await contract.addRewardToFluid();
-      const receipt = await getTxReceipt(hash);
-      console.log(receipt);
-
-      changeModal(() =>
-        openTxSuccessModal({
-          txHash: hash,
-        })
-      );
-    } catch (err) {
-      console.log(err);
-      changeModal(() => openTxFailedModal());
-    } finally {
-      setIsLoading(false);
-    }
+  const handleClick = async () => {
+    runTx({
+      txFn: () => addReward(),
+    });
   };
 
   return (
@@ -95,7 +66,7 @@ const AddReward = () => {
         buttonText="Add reward"
         isLoading={isLoading}
         disabled={disableButton}
-        onClick={addReward}
+        onClick={handleClick}
       ></TxRunButton>
     </Wrapper>
   );

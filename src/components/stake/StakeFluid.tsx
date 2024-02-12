@@ -1,41 +1,30 @@
-import { Contract, parseEther } from 'ethers';
+import { parseEther } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
-import FluidABI from '@/abis/Fluid.json';
 import TxRunButton from '@/components/common/buttons/TxRunButton';
 import TokenAmountInput from '@/components/common/inputs/TokenAmountInput';
 import Spacing from '@/components/common/Spacing';
 import Text from '@/components/common/Text';
 import { Card, Slider } from '@/components/nextui';
-import { FLUID_CONTRACT_ADDRESS } from '@/constants';
 import { FLUID } from '@/constants';
 import useContract from '@/hooks/useContract';
-import useEthers from '@/hooks/useEthers';
-import useModal from '@/hooks/useModal';
 import useTokenBalance from '@/hooks/useTokenBalance';
+import useTransaction from '@/hooks/useTransaction';
 import useWallet from '@/hooks/useWallet';
 import { math } from '@/utils';
 
 const StakeFluid = () => {
   const { account } = useWallet();
-  const { getTxReceipt } = useContract();
-  const { signer } = useEthers();
+  const { isLoading, runTx } = useTransaction();
+  const { stakeFluid } = useContract();
   const { balance: fluidBalance, refetch: refetchFluidBalance } =
     useTokenBalance({
       token: FLUID,
     });
-  const {
-    openTxSuccessModal,
-    openTxFailedModal,
-    openTxWaitingModal,
-    changeModal,
-  } = useModal();
 
   const [amount, setAmount] = useState('');
   const [percent, setPercent] = useState(0);
-
-  const [isLoading, setIsLoading] = useState(false);
   const [disableInput, setDisableInput] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
   const [buttonText, setButtonText] = useState('');
@@ -94,32 +83,15 @@ const StakeFluid = () => {
   };
 
   // Stake
-  const stake = async () => {
-    try {
-      if (!account) return;
-      setIsLoading(true);
-      openTxWaitingModal();
-
-      const parsedAmount = parseEther(amount);
-      const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
-
-      const { hash } = await contract.stake(parsedAmount);
-      const receipt = await getTxReceipt(hash);
-      console.log(receipt);
-
-      changeModal(() =>
-        openTxSuccessModal({
-          txHash: hash,
-        })
-      );
-      refetchFluidBalance();
-      resetInputs();
-    } catch (err) {
-      console.log(err);
-      changeModal(() => openTxFailedModal());
-    } finally {
-      setIsLoading(false);
-    }
+  const handleClick = async () => {
+    const parsedAmount = parseEther(amount);
+    runTx({
+      txFn: () => stakeFluid(parsedAmount),
+      onAfterTx: () => {
+        refetchFluidBalance();
+        resetInputs();
+      },
+    });
   };
 
   return (
@@ -158,7 +130,7 @@ const StakeFluid = () => {
         buttonText={buttonText}
         isLoading={isLoading}
         disabled={disableButton}
-        onClick={stake}
+        onClick={handleClick}
       ></TxRunButton>
     </Wrapper>
   );

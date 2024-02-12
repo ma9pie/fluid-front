@@ -1,5 +1,5 @@
 import { waitForTransactionReceipt } from '@wagmi/core';
-import { BrowserProvider, Contract, parseEther } from 'ethers';
+import { Contract, parseEther } from 'ethers';
 import { erc20Abi } from 'viem';
 
 import BlastABI from '@/abis/Blast.json';
@@ -12,16 +12,15 @@ import {
   ST_GAS_CONTRACT_ADDRESS,
   STGAS,
 } from '@/constants';
+import useEthers from '@/hooks/useEthers';
 
 const useContract = () => {
+  const { provider, signer } = useEthers();
+
   // Approve
   const approve = async (address: string, spender: string, amount: string) => {
-    const provider = new BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-
     const parsedAmount = parseEther(amount);
     const contract = new Contract(address, erc20Abi, signer);
-
     const tx = await contract.approve(spender, parsedAmount);
     console.log(tx);
   };
@@ -33,12 +32,44 @@ const useContract = () => {
 
   // Staked된 Fluid amount 조회
   const getTotalStakedFluid = async () => {
-    const provider = new BrowserProvider(window.ethereum);
     const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, provider);
     return contract.totalStake();
   };
 
-  return { approve, getTxReceipt, getTotalStakedFluid };
+  // Add reward
+  const addReward = async () => {
+    const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
+    return contract.addRewardToFluid();
+  };
+
+  // Claim reward
+  const claimReward = async () => {
+    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
+    return contract.claim();
+  };
+
+  // Faucet fluid
+  const faucetFluid = async () => {
+    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
+    return contract.mint();
+  };
+
+  // Stake fluid
+  const stakeFluid = async (amount: BigInt) => {
+    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
+    return contract.stake(amount);
+  };
+
+  return {
+    approve,
+    getTxReceipt,
+    getTotalStakedFluid,
+
+    addReward,
+    claimReward,
+    faucetFluid,
+    stakeFluid,
+  };
 };
 
 export default useContract;
