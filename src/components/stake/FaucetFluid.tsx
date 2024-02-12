@@ -50,7 +50,7 @@ const FaucetFluid = () => {
 
   // 버튼 텍스트 관리
   useEffect(() => {
-    if (isAddress(address)) {
+    if (!address || isAddress(address)) {
       setButtonText('Faucet');
     } else {
       setButtonText('Invalid address');
