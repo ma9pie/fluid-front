@@ -1,27 +1,27 @@
-import { BrowserProvider, Contract, isAddress } from 'ethers';
+import { BrowserProvider, Contract } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
 import FluidABI from '@/abis/Fluid.json';
 import TxRunButton from '@/components/common/buttons/TxRunButton';
 import Flex from '@/components/common/Flex';
-import AddressInput from '@/components/common/inputs/AddressInput';
 import Spacing from '@/components/common/Spacing';
 import Text from '@/components/common/Text';
 import { Card } from '@/components/nextui';
-import { FLUID_CONTRACT_ADDRESS } from '@/constants';
-import { FLUID } from '@/constants';
+import { FLUID_CONTRACT_ADDRESS, STGAS } from '@/constants';
 import useContract from '@/hooks/useContract';
 import useModal from '@/hooks/useModal';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import useWallet from '@/hooks/useWallet';
+import { comma } from '@/utils';
 
-const FaucetFluid = () => {
+const ClaimReward = () => {
   const { account } = useWallet();
   const { getTxReceipt } = useContract();
-  const { refetch: refetchFluidBalance } = useTokenBalance({
-    token: FLUID,
-  });
+  const { balance: stGASBalance, refetch: refetchStGASBalance } =
+    useTokenBalance({
+      token: STGAS,
+    });
   const {
     openTxSuccessModal,
     openTxFailedModal,
@@ -29,41 +29,20 @@ const FaucetFluid = () => {
     changeModal,
   } = useModal();
 
-  const [address, setAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [disableButton, setDisableButton] = useState(false);
-  const [buttonText, setButtonText] = useState('Faucet');
-
-  // Input 상태 관리
-  const handleChange = (value: string) => {
-    setAddress(value);
-  };
 
   // 버튼 활성화 여부
   useEffect(() => {
-    if (isLoading || !account || !isAddress(address)) {
+    if (isLoading || !account) {
       setDisableButton(true);
     } else {
       setDisableButton(false);
     }
-  }, [isLoading, account, address]);
+  }, [isLoading, account]);
 
-  // 버튼 텍스트 관리
-  useEffect(() => {
-    if (isAddress(address)) {
-      setButtonText('Faucet');
-    } else {
-      setButtonText('Invalid address');
-    }
-  }, [address]);
-
-  // 입력값 초기화
-  const resetInputs = () => {
-    setAddress('');
-  };
-
-  // Faucet
-  const faucet = async () => {
+  // Claim reward
+  const claimReward = async () => {
     try {
       if (!account) return;
       setIsLoading(true);
@@ -73,7 +52,7 @@ const FaucetFluid = () => {
 
       const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
 
-      const { hash } = await contract.mint();
+      const { hash } = await contract.claim();
       const receipt = await getTxReceipt(hash);
       console.log(receipt);
 
@@ -82,8 +61,7 @@ const FaucetFluid = () => {
           txHash: hash,
         })
       );
-      refetchFluidBalance();
-      resetInputs();
+      refetchStGASBalance();
     } catch (err) {
       console.log(err);
       changeModal(() => openTxFailedModal());
@@ -94,30 +72,30 @@ const FaucetFluid = () => {
 
   return (
     <Wrapper>
-      <Text xl semibold>
-        Faucet Fluid
+      <Text _2xl semibold>
+        Claim reward
       </Text>
 
       <Spacing height={24}></Spacing>
 
-      <Flex col gap={8}>
-        <Text>Wallet Address</Text>
-        <AddressInput value={address} onChange={handleChange}></AddressInput>
+      <Flex justify="between" wrap>
+        <Text semibold>Current stGAS</Text>
+        <Text>{account ? comma(stGASBalance) : '-'}</Text>
       </Flex>
 
       <Spacing height={64}></Spacing>
 
       <TxRunButton
-        buttonText={buttonText}
+        buttonText="Claim reward"
         isLoading={isLoading}
         disabled={disableButton}
-        onClick={faucet}
+        onClick={claimReward}
       ></TxRunButton>
     </Wrapper>
   );
 };
 
-export default FaucetFluid;
+export default ClaimReward;
 
 const Wrapper = styled(Card)`
   ${tw`p-6`};

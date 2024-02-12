@@ -13,11 +13,15 @@ const ChainButton = () => {
   return (
     <Wrapper>
       {chain && !isInvalidChain ? (
-        <Text>{chain.name}</Text>
+        <Text sm nowrap>
+          {chain.name}
+        </Text>
       ) : (
         <Box onClick={() => switchChain({ chainId: CHAIN_ID })}>
           <IoWarningOutline size={24}></IoWarningOutline>
-          <Text nowrap>Invalid network</Text>
+          <Text sm nowrap>
+            Invalid network
+          </Text>
         </Box>
       )}
     </Wrapper>

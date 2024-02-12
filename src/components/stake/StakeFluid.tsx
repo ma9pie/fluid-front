@@ -6,6 +6,7 @@ import FluidABI from '@/abis/Fluid.json';
 import TxRunButton from '@/components/common/buttons/TxRunButton';
 import TokenAmountInput from '@/components/common/inputs/TokenAmountInput';
 import Spacing from '@/components/common/Spacing';
+import Text from '@/components/common/Text';
 import { Card, Slider } from '@/components/nextui';
 import { FLUID_CONTRACT_ADDRESS } from '@/constants';
 import { FLUID } from '@/constants';
@@ -18,9 +19,10 @@ import { math } from '@/utils';
 const StakeFluid = () => {
   const { account } = useWallet();
   const { getTxReceipt } = useContract();
-  const { balance, refetch: refetchBalance } = useTokenBalance({
-    token: FLUID,
-  });
+  const { balance: fluidBalance, refetch: refetchFluidBalance } =
+    useTokenBalance({
+      token: FLUID,
+    });
   const {
     openTxSuccessModal,
     openTxFailedModal,
@@ -48,29 +50,29 @@ const StakeFluid = () => {
       isLoading ||
       !account ||
       math(amount).eq(0) ||
-      math(amount).gt(balance)
+      math(amount).gt(fluidBalance)
     ) {
       setDisableButton(true);
     } else {
       setDisableButton(false);
     }
-  }, [isLoading, account, amount, balance]);
+  }, [isLoading, account, amount, fluidBalance]);
 
   // 버튼 텍스트 관리
   useEffect(() => {
-    if (math(amount).gt(balance)) {
+    if (math(amount).gt(fluidBalance)) {
       setButtonText('Invalid amount');
     } else {
       setButtonText('Stake');
     }
-  }, [amount, balance]);
+  }, [amount, fluidBalance]);
 
   // Input 상태 관리
   const handleChangeInput = (value: string) => {
     const _percent =
-      Number(value) > Number(balance)
+      Number(value) > Number(fluidBalance)
         ? 100
-        : math(value).div(balance).mul(100).toNumber();
+        : math(value).div(fluidBalance).mul(100).toNumber();
     setAmount(value);
     setPercent(_percent);
   };
@@ -78,7 +80,7 @@ const StakeFluid = () => {
   // Slider 상태 관리
   const handleChangeSlider = (value: number | number[]) => {
     if (typeof value === 'object') return;
-    const _amount = math(balance).mul(value).div(100).value();
+    const _amount = math(fluidBalance).mul(value).div(100).value();
     setAmount(_amount);
     setPercent(value);
   };
@@ -110,7 +112,7 @@ const StakeFluid = () => {
           txHash: hash,
         })
       );
-      refetchBalance();
+      refetchFluidBalance();
       resetInputs();
     } catch (err) {
       console.log(err);
@@ -122,14 +124,16 @@ const StakeFluid = () => {
 
   return (
     <Wrapper>
-      <Title>Stake Fluid</Title>
+      <Text _2xl semibold>
+        Stake Fluid
+      </Text>
 
       <Spacing height={24}></Spacing>
 
       <TokenAmountInput
         token={FLUID}
         amount={amount}
-        balance={balance}
+        balance={fluidBalance}
         disabled={disableInput}
         onChange={handleChangeInput}
       ></TokenAmountInput>
@@ -164,7 +168,4 @@ export default StakeFluid;
 
 const Wrapper = styled(Card)`
   ${tw`p-6`};
-`;
-const Title = styled.p`
-  ${tw`text-2xl font-semibold`};
 `;

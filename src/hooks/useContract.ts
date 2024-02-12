@@ -2,7 +2,16 @@ import { waitForTransactionReceipt } from '@wagmi/core';
 import { BrowserProvider, Contract, parseEther } from 'ethers';
 import { erc20Abi } from 'viem';
 
+import BlastABI from '@/abis/Blast.json';
+import FluidABI from '@/abis/Fluid.json';
+import StGASABI from '@/abis/StGAS.json';
 import { wagmiConfig } from '@/config';
+import {
+  FLUID,
+  FLUID_CONTRACT_ADDRESS,
+  ST_GAS_CONTRACT_ADDRESS,
+  STGAS,
+} from '@/constants';
 
 const useContract = () => {
   // Approve
@@ -22,7 +31,14 @@ const useContract = () => {
     return waitForTransactionReceipt(wagmiConfig, { hash });
   };
 
-  return { approve, getTxReceipt };
+  // Staked된 Fluid amount 조회
+  const getTotalStakedFluid = async () => {
+    const provider = new BrowserProvider(window.ethereum);
+    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, provider);
+    return contract.totalStake();
+  };
+
+  return { approve, getTxReceipt, getTotalStakedFluid };
 };
 
 export default useContract;

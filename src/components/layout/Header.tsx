@@ -20,6 +20,7 @@ import {
 const MENU_LIST = [
   { title: 'Home', url: '/' },
   { title: 'Stake', url: '/stake' },
+  { title: 'Portfolio', url: '/portfolio' },
 ];
 
 const Header = () => {
@@ -31,8 +32,10 @@ const Header = () => {
     <Wrapper>
       <Container>
         <LinkContainer>
-          <LogoWrapper href="/">
-            <Img src="/images/logo/logo.svg" width={48} height={48}></Img>
+          <LogoWrapper>
+            <Link href="/">
+              <Img src="/images/logo/logo.svg" width={48} height={48}></Img>
+            </Link>
           </LogoWrapper>
 
           <ResponsiveView
@@ -108,11 +111,11 @@ const MenuContainer = styled.div`
 const ButtonContainer = styled.div`
   ${tw`flex items-center gap-2`};
 `;
-const LogoWrapper = styled(Link)`
-  ${tw`p-2`};
+const LogoWrapper = styled.div`
+  ${tw`w-12 h-12`};
 `;
 const Menu = styled.div<{ selected: boolean }>`
-  ${tw`text-lg font-bold text-white px-4 py-2`};
+  ${tw`text-lg font-bold text-white px-3 py-2`};
   ${(props) =>
     props.selected
       ? tw`text-black dark:text-white`
