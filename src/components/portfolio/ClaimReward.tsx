@@ -1,4 +1,4 @@
-import { BrowserProvider, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
@@ -10,6 +10,7 @@ import Text from '@/components/common/Text';
 import { Card } from '@/components/nextui';
 import { FLUID_CONTRACT_ADDRESS, STGAS } from '@/constants';
 import useContract from '@/hooks/useContract';
+import useEthers from '@/hooks/useEthers';
 import useModal from '@/hooks/useModal';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import useWallet from '@/hooks/useWallet';
@@ -17,6 +18,7 @@ import { comma } from '@/utils';
 
 const ClaimReward = () => {
   const { account } = useWallet();
+  const { signer } = useEthers();
   const { getTxReceipt } = useContract();
   const { balance: stGASBalance, refetch: refetchStGASBalance } =
     useTokenBalance({
@@ -47,8 +49,6 @@ const ClaimReward = () => {
       if (!account) return;
       setIsLoading(true);
       openTxWaitingModal();
-      const provider = new BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
 
       const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
 
