@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --brandColor: #f7de33;
+}
+
 /* layout 확인용 class */
 .border-black {
   border: 1px solid black;
