@@ -10,9 +10,16 @@ import {
   NavbarContent,
   NavbarMenu,
   NavbarMenuToggle,
+  Progress,
   Slider,
   Spinner,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from '@nextui-org/react';
 
 export {
@@ -27,7 +34,14 @@ export {
   NavbarContent,
   NavbarMenu,
   NavbarMenuToggle,
+  Progress,
   Slider,
   Spinner,
   Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 };

@@ -67,7 +67,7 @@ const FaucetFluid = () => {
 
   return (
     <Wrapper>
-      <Text xl semibold>
+      <Text _2xl semibold>
         Faucet Fluid
       </Text>
 

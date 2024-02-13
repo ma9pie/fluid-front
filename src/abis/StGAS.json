@@ -47,6 +47,20 @@
   },
   {
     "type": "function",
+    "name": "claim",
+    "inputs": [
+      { "name": "index", "type": "uint256", "internalType": "uint256" },
+      {
+        "name": "claimContractCount",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "claimAll",
     "inputs": [
       {
@@ -113,22 +127,41 @@
   },
   {
     "type": "function",
-    "name": "gasClaim",
+    "name": "gasClaimedPerToken",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "getUnstakeInfo",
     "inputs": [
-      {
-        "name": "claimContractCount",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
+      { "name": "user", "type": "address", "internalType": "address" }
     ],
     "outputs": [
       {
-        "name": "amountClaimed",
-        "type": "uint256",
-        "internalType": "uint256"
+        "name": "userUnstakeInfos",
+        "type": "tuple[]",
+        "internalType": "struct StGAS.UnstakeInfo[]",
+        "components": [
+          { "name": "index", "type": "uint256", "internalType": "uint256" },
+          { "name": "user", "type": "address", "internalType": "address" },
+          {
+            "name": "unstakeTime",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          { "name": "amount", "type": "uint256", "internalType": "uint256" },
+          {
+            "name": "gasClaimedPerToken",
+            "type": "uint256",
+            "internalType": "uint256"
+          },
+          { "name": "isClaimed", "type": "bool", "internalType": "bool" }
+        ]
       }
     ],
-    "stateMutability": "nonpayable"
+    "stateMutability": "view"
   },
   {
     "type": "function",
@@ -176,11 +209,7 @@
       { "name": "recipient", "type": "address", "internalType": "address" }
     ],
     "outputs": [
-      {
-        "name": "amountToMint",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
+      { "name": "amountToMint", "type": "uint256", "internalType": "uint256" }
     ],
     "stateMutability": "nonpayable"
   },
@@ -216,15 +245,6 @@
   },
   {
     "type": "function",
-    "name": "setUnbondingPeriod",
-    "inputs": [
-      { "name": "period", "type": "uint256", "internalType": "uint256" }
-    ],
-    "outputs": [],
-    "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
     "name": "setWhitelist",
     "inputs": [
       { "name": "target", "type": "address", "internalType": "address" }
@@ -249,6 +269,13 @@
   {
     "type": "function",
     "name": "totalSupply",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "totalUnstake",
     "inputs": [],
     "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
     "stateMutability": "view"
@@ -294,11 +321,7 @@
     "type": "function",
     "name": "unstake",
     "inputs": [
-      {
-        "name": "amountToBurn",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
+      { "name": "amountToBurn", "type": "uint256", "internalType": "uint256" }
     ],
     "outputs": [],
     "stateMutability": "nonpayable"
@@ -307,21 +330,18 @@
     "type": "function",
     "name": "unstakeInfos",
     "inputs": [
-      {
-        "name": "unstakeHash",
-        "type": "bytes32",
-        "internalType": "bytes32"
-      }
+      { "name": "unstakeHash", "type": "bytes32", "internalType": "bytes32" }
     ],
     "outputs": [
+      { "name": "index", "type": "uint256", "internalType": "uint256" },
       { "name": "user", "type": "address", "internalType": "address" },
-      { "name": "stakeTime", "type": "uint256", "internalType": "uint256" },
+      { "name": "unstakeTime", "type": "uint256", "internalType": "uint256" },
+      { "name": "amount", "type": "uint256", "internalType": "uint256" },
       {
-        "name": "expireTime",
+        "name": "gasClaimedPerToken",
         "type": "uint256",
         "internalType": "uint256"
       },
-      { "name": "amount", "type": "uint256", "internalType": "uint256" },
       { "name": "isClaimed", "type": "bool", "internalType": "bool" }
     ],
     "stateMutability": "view"

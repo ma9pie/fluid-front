@@ -20,6 +20,7 @@ import {
 const MENU_LIST = [
   { title: 'Home', url: '/' },
   { title: 'Stake', url: '/stake' },
+  { title: 'Unstake', url: '/unstake' },
   { title: 'Portfolio', url: '/portfolio' },
 ];
 

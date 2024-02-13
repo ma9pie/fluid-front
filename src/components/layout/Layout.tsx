@@ -18,6 +18,10 @@ const Layout = ({ children }: Props) => {
   );
 };
 
+Layout.Container = styled.div`
+  ${tw`flex flex-col gap-12 w-full max-w-[640px] mx-auto`};
+`;
+
 export default Layout;
 
 const Wrapper = styled.main`

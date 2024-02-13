@@ -16,7 +16,7 @@ import { comma } from '@/utils';
 const ClaimReward = () => {
   const { account } = useWallet();
   const { isLoading, runTx } = useTransaction();
-  const { claimReward } = useContract();
+  const { claimFluid } = useContract();
   const { balance: stGASBalance, refetch: refetchStGASBalance } =
     useTokenBalance({
       token: STGAS,
@@ -36,7 +36,7 @@ const ClaimReward = () => {
   // Claim reward
   const handleClick = () => {
     runTx({
-      txFn: () => claimReward(),
+      txFn: () => claimFluid(),
       onAfterTx: () => {
         refetchStGASBalance();
       },

@@ -13,6 +13,7 @@ import {
   STGAS,
 } from '@/constants';
 import useEthers from '@/hooks/useEthers';
+import useWallet from '@/hooks/useWallet';
 
 const useContract = () => {
   const { provider, signer } = useEthers();
@@ -36,14 +37,20 @@ const useContract = () => {
     return contract.totalStake();
   };
 
+  // Unstaking중인 stGAS position list 조회
+  const getUnstakingStGASPostionList = (address: string) => {
+    const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, provider);
+    return contract.getUnstakeInfo(address);
+  };
+
   // Add reward
   const addReward = async () => {
     const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
     return contract.addRewardToFluid();
   };
 
-  // Claim reward
-  const claimReward = async () => {
+  // Claim fluid
+  const claimFluid = async () => {
     const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
     return contract.claim();
   };
@@ -60,15 +67,23 @@ const useContract = () => {
     return contract.stake(amount);
   };
 
+  // Unstake stGAS
+  const unstakeStGAS = async (amount: BigInt) => {
+    const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
+    return contract.unstake(amount);
+  };
+
   return {
     approve,
     getTxReceipt,
     getTotalStakedFluid,
+    getUnstakingStGASPostionList,
 
     addReward,
-    claimReward,
+    claimFluid,
     faucetFluid,
     stakeFluid,
+    unstakeStGAS,
   };
 };
 
