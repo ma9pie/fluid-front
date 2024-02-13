@@ -88,3 +88,11 @@ export const floor = (num: Num, precision?: number) => {
   digits = digits && precision ? digits.slice(0, precision) : digits;
   return digits === undefined ? integer : `${integer}.${digits}`;
 };
+
+/**
+ * 첫 글자 대문자 변환 함수
+ */
+export const firstToUpper = (str: string) => {
+  if (typeof str !== 'string') return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

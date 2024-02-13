@@ -12,7 +12,7 @@ import { WagmiProvider } from 'wagmi';
 import ModalProvider from '@/components/providers/ModalProvider';
 import { wagmiConfig } from '@/config';
 import { IS_PRODUCTION } from '@/constants';
-import useGA4 from '@/hooks/useGA4';
+import { initializeGA, trackPageView } from '@/utils';
 
 const queryClient = new QueryClient();
 
@@ -38,7 +38,6 @@ const Inner = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   const { theme } = useTheme();
-  const { initializeGA, trackPageView } = useGA4();
 
   const [className, setClassName] = useState<string | undefined>();
 
