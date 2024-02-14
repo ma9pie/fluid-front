@@ -22,6 +22,7 @@ const MENU_LIST = [
   { title: 'Fluid', url: '/fluid' },
   { title: 'stGAS', url: '/stgas' },
   { title: 'Portfolio', url: '/portfolio' },
+  { title: 'Admin', url: '/admin' },
 ];
 
 const Header = () => {
