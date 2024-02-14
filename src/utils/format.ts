@@ -35,15 +35,10 @@ export const numberToString = (num: Num) => {
 /**
  * 숫자 정수 부분의 0 값을 trim
  * "00000.012" -> "0.012"
- * "00.0120" -> "0.012"
  */
 export const trimZero = (value: string) => {
   const regex = /^0*(\d+)(\.\d+)?0*$/;
-  const result = value.replace(regex, '$1$2');
-  if (!value) {
-    return '';
-  }
-  return new Big(result).toFixed();
+  return value.replace(regex, '$1$2');
 };
 
 /**

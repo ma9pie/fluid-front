@@ -159,32 +159,36 @@ describe('trimZero test', () => {
     expect(result).toEqual('0');
   });
   test('', () => {
-    const result = trimZero('.0');
+    const result = trimZero('00');
     expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = trimZero('000');
+    expect(result).toEqual('0');
+  });
+  test('', () => {
+    const result = trimZero('.0');
+    expect(result).toEqual('.0');
   });
   test('', () => {
     const result = trimZero('.00');
-    expect(result).toEqual('0');
+    expect(result).toEqual('.00');
   });
   test('', () => {
     const result = trimZero('0.');
-    expect(result).toEqual('0');
-  });
-  test('', () => {
-    const result = trimZero('00.');
-    expect(result).toEqual('0');
+    expect(result).toEqual('0.');
   });
   test('', () => {
     const result = trimZero('0.0');
-    expect(result).toEqual('0');
+    expect(result).toEqual('0.0');
   });
   test('', () => {
     const result = trimZero('00000.000');
-    expect(result).toEqual('0');
+    expect(result).toEqual('0.000');
   });
   test('', () => {
     const result = trimZero('00000.100');
-    expect(result).toEqual('0.1');
+    expect(result).toEqual('0.100');
   });
   test('', () => {
     const result = trimZero('1000');
@@ -196,7 +200,7 @@ describe('trimZero test', () => {
   });
   test('', () => {
     const result = trimZero('0.001000');
-    expect(result).toEqual('0.001');
+    expect(result).toEqual('0.001000');
   });
   test('', () => {
     const result = trimZero('00000.012');
@@ -204,7 +208,7 @@ describe('trimZero test', () => {
   });
   test('', () => {
     const result = trimZero('00000.012000');
-    expect(result).toEqual('0.012');
+    expect(result).toEqual('0.012000');
   });
   test('', () => {
     const result = trimZero('987654.321');
@@ -216,7 +220,7 @@ describe('trimZero test', () => {
   });
   test('', () => {
     const result = trimZero('456.00000');
-    expect(result).toEqual('456');
+    expect(result).toEqual('456.00000');
   });
 });
 
