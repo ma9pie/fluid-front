@@ -26,6 +26,7 @@ const useContract = () => {
     console.log(tx);
   };
 
+  /** @prodiver */
   // Tx receipt 조회
   const getTxReceipt = async (hash: `0x${string}`) => {
     return waitForTransactionReceipt(wagmiConfig, { hash });
@@ -43,6 +44,7 @@ const useContract = () => {
     return contract.getUnstakeInfo(address);
   };
 
+  /** @signer */
   // Add reward
   const addReward = async () => {
     const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
