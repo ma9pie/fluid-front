@@ -4,7 +4,7 @@ import tw, { styled } from 'twin.macro';
 
 import BlastABI from '@/abis/Blast.json';
 import FluidABI from '@/abis/Fluid.json';
-import StGASABI from '@/abis/StGAS.json';
+import StGASABI from '@/abis/StGas.json';
 import Button from '@/components/common/buttons/Button';
 import Flex from '@/components/common/Flex';
 import Layout from '@/components/layout/Layout';

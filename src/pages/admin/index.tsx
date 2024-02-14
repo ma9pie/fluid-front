@@ -1,9 +1,9 @@
 import React from 'react';
 import tw, { styled } from 'twin.macro';
 
-import AddReward from '@/components/admin/AddReward';
 import Head from '@/components/layout/Head';
 import Layout from '@/components/layout/Layout';
+import AddReward from '@/components/pages/admin/AddReward';
 
 const Admin = () => {
   return (

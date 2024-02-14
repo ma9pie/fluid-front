@@ -17,7 +17,7 @@ const MOCK_DATA = [{ id: 1, unstakeTime: 0, amount: 0.001 }];
 
 const PositionList = () => {
   const { account } = useWallet();
-  const { getUnstakingStGASPostionList } = useContract();
+  const { getUnstakingStGasPostionList } = useContract();
 
   const [positionList, setPositionList] = useState([]);
 
@@ -27,7 +27,7 @@ const PositionList = () => {
 
   const updatePositionList = async () => {
     if (!account) return setPositionList([]);
-    const res = await getUnstakingStGASPostionList(account);
+    const res = await getUnstakingStGasPostionList(account);
     console.log(res);
   };
 

@@ -2,17 +2,17 @@ import React from 'react';
 
 import Head from '@/components/layout/Head';
 import Layout from '@/components/layout/Layout';
-import UnstakeStGAS from '@/components/unstake/UnstakeStGAS';
+import UnstakeStGas from '@/components/pages/stgas/UnstakeStGas';
 
-const StGASPage = () => {
+const StGasPage = () => {
   return (
     <Layout>
       <Head></Head>
       <Layout.Container>
-        <UnstakeStGAS></UnstakeStGAS>
+        <UnstakeStGas></UnstakeStGas>
       </Layout.Container>
     </Layout>
   );
 };
 
-export default StGASPage;
+export default StGasPage;

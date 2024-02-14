@@ -1,10 +1,11 @@
 import { waitForTransactionReceipt } from '@wagmi/core';
-import { Contract, parseEther } from 'ethers';
+import { Contract, parseEther, Provider, Signer } from 'ethers';
+import { useMemo } from 'react';
 import { erc20Abi } from 'viem';
 
 import BlastABI from '@/abis/Blast.json';
 import FluidABI from '@/abis/Fluid.json';
-import StGASABI from '@/abis/StGAS.json';
+import StGasABI from '@/abis/StGas.json';
 import { wagmiConfig } from '@/config';
 import {
   FLUID,
@@ -17,6 +18,14 @@ import useWallet from '@/hooks/useWallet';
 
 const useContract = () => {
   const { provider, signer } = useEthers();
+
+  const fluidContract = (runner: Provider | Signer = provider) => {
+    return new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, runner);
+  };
+
+  const stGasContract = (runner: Provider | Signer = provider) => {
+    return new Contract(ST_GAS_CONTRACT_ADDRESS, StGasABI, runner);
+  };
 
   // Approve
   const approve = async (address: string, spender: string, amount: string) => {
@@ -34,58 +43,57 @@ const useContract = () => {
 
   // Staked된 Fluid amount 조회
   const getTotalStakedFluid = async () => {
-    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, provider);
-    return contract.totalStake();
+    return fluidContract().totalStake();
   };
 
   // Unstaking중인 stGAS position list 조회
-  const getUnstakingStGASPostionList = (address: string) => {
-    const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, provider);
-    return contract.getUnstakeInfo(address);
+  const getUnstakingStGasPostionList = (address: string) => {
+    return stGasContract().getUnstakeInfo(address);
+  };
+
+  // Staking중인 Fluid를 claim해서 얻을 수 있는 stGAS 조회
+  const getAmountOfStGasReward = (address: string) => {
+    return fluidContract().getAmountReward(address);
   };
 
   /** @signer */
   // Add reward
   const addReward = async () => {
-    const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
-    return contract.addRewardToFluid();
+    return stGasContract(signer).addRewardToFluid();
   };
 
   // Claim fluid
   const claimFluid = async () => {
-    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
-    return contract.claim();
+    return fluidContract(signer).claim();
   };
 
   // Faucet fluid
   const faucetFluid = async () => {
-    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
-    return contract.mint();
+    return fluidContract(signer).mint();
   };
 
   // Stake fluid
   const stakeFluid = async (amount: BigInt) => {
-    const contract = new Contract(FLUID_CONTRACT_ADDRESS, FluidABI, signer);
-    return contract.stake(amount);
+    return fluidContract(signer).stake(amount);
   };
 
   // Unstake stGAS
-  const unstakeStGAS = async (amount: BigInt) => {
-    const contract = new Contract(ST_GAS_CONTRACT_ADDRESS, StGASABI, signer);
-    return contract.unstake(amount);
+  const unstakeStGas = async (amount: BigInt) => {
+    return stGasContract(signer).unstake(amount);
   };
 
   return {
     approve,
     getTxReceipt,
     getTotalStakedFluid,
-    getUnstakingStGASPostionList,
+    getUnstakingStGasPostionList,
+    getAmountOfStGasReward,
 
     addReward,
     claimFluid,
     faucetFluid,
     stakeFluid,
-    unstakeStGAS,
+    unstakeStGas,
   };
 };
 

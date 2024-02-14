@@ -3,7 +3,6 @@ import tw, { styled } from 'twin.macro';
 
 import Flex from '@/components/common/Flex';
 import Text from '@/components/common/Text';
-import LinkBox from '@/components/home/LinkBox';
 import Head from '@/components/layout/Head';
 import Layout from '@/components/layout/Layout';
 

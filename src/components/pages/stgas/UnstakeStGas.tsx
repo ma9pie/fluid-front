@@ -7,17 +7,17 @@ import TokenAmountInput from '@/components/common/inputs/TokenAmountInput';
 import Spacing from '@/components/common/Spacing';
 import Text from '@/components/common/Text';
 import { Card, Slider } from '@/components/nextui';
-import { FLUID, STGAS } from '@/constants';
+import { STGAS } from '@/constants';
 import useContract from '@/hooks/useContract';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import useTransaction from '@/hooks/useTransaction';
 import useWallet from '@/hooks/useWallet';
 import { math } from '@/utils';
 
-const UnstakeStGAS = () => {
+const UnstakeStGas = () => {
   const { account } = useWallet();
   const { isLoading, runTx } = useTransaction();
-  const { unstakeStGAS } = useContract();
+  const { unstakeStGas } = useContract();
   const { balance: stGASBalance, refetch: refetchStGASBalance } =
     useTokenBalance({
       token: STGAS,
@@ -86,7 +86,7 @@ const UnstakeStGAS = () => {
   const handleClick = () => {
     const parsedAmount = parseEther(amount);
     runTx({
-      txFn: () => unstakeStGAS(parsedAmount),
+      txFn: () => unstakeStGas(parsedAmount),
       onAfterTx: () => {
         refetchStGASBalance();
         resetInputs();
@@ -136,7 +136,7 @@ const UnstakeStGAS = () => {
   );
 };
 
-export default UnstakeStGAS;
+export default UnstakeStGas;
 
 const Wrapper = styled(Card)`
   ${tw`p-6`};

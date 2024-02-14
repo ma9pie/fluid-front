@@ -2,7 +2,7 @@ import React from 'react';
 
 import Head from '@/components/layout/Head';
 import Layout from '@/components/layout/Layout';
-import PositionList from '@/components/protfolio/PositionList';
+import PositionList from '@/components/pages/protfolio/PositionList';
 
 const PortfolioPage = () => {
   return (

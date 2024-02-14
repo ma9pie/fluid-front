@@ -17,7 +17,7 @@ const ClaimReward = () => {
   const { account } = useWallet();
   const { isLoading, runTx } = useTransaction();
   const { claimFluid } = useContract();
-  const { balance: stGASBalance, refetch: refetchStGASBalance } =
+  const { balance: stGasBalance, refetch: refetchStGasBalance } =
     useTokenBalance({
       token: STGAS,
     });
@@ -38,7 +38,7 @@ const ClaimReward = () => {
     runTx({
       txFn: () => claimFluid(),
       onAfterTx: () => {
-        refetchStGASBalance();
+        refetchStGasBalance();
       },
     });
   };
@@ -53,7 +53,7 @@ const ClaimReward = () => {
 
       <Flex justify="between" wrap>
         <Text semibold>Current stGAS</Text>
-        <Text>{account ? comma(stGASBalance) : '-'}</Text>
+        <Text>{account ? comma(stGasBalance) : '-'}</Text>
       </Flex>
 
       <Spacing height={64}></Spacing>
