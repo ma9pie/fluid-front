@@ -32,9 +32,7 @@ const Wrapper = styled.div`
   ${tw`dark:border-neutral-900`};
 `;
 const Text = styled.p`
-  ${tw`text-sm font-medium`};
-  ${tw`text-neutral-200`};
-  ${tw`dark:text-neutral-600`};
+  ${tw`text-sm text-neutral-500 font-medium`};
 `;
 const IconWrapper = styled(Link)`
   ${tw``};
