@@ -1,4 +1,3 @@
-import { formatUnits } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
@@ -37,7 +36,7 @@ const AddReward = () => {
   // 데이터 업데이트
   const updateData = async () => {
     const amount = await getTotalStakedFluid();
-    setStakedFluid(formatUnits(amount, FLUID.decimals));
+    setStakedFluid(FLUID.format(amount));
   };
 
   // Add reward

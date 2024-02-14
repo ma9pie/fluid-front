@@ -1,4 +1,3 @@
-import { parseEther } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
@@ -84,7 +83,7 @@ const StakeFluid = () => {
 
   // Stake
   const handleClick = () => {
-    const parsedAmount = parseEther(amount);
+    const parsedAmount = FLUID.parse(amount);
     runTx({
       txFn: () => stakeFluid(parsedAmount),
       onAfterTx: () => {

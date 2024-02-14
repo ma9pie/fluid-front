@@ -1,4 +1,3 @@
-import { formatUnits } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useBalance } from 'wagmi';
 
@@ -24,8 +23,8 @@ const useTokenBalance = ({ token }: Props) => {
   });
 
   useEffect(() => {
-    if (!data) return setBalance('0');
-    setBalance(formatUnits(data.value, token?.decimals));
+    if (!data || !token) return setBalance('0');
+    setBalance(token.format(data.value));
   }, [token, data]);
 
   return { balance, refetch };

@@ -4,6 +4,7 @@ import tw, { styled } from 'twin.macro';
 import TxRunButton from '@/components/common/buttons/TxRunButton';
 import Flex from '@/components/common/Flex';
 import Spacing from '@/components/common/Spacing';
+import Symbol from '@/components/common/Symbol';
 import Text from '@/components/common/Text';
 import { Card } from '@/components/nextui';
 import { STGAS } from '@/constants';
@@ -16,13 +17,18 @@ import { comma } from '@/utils';
 const ClaimReward = () => {
   const { account } = useWallet();
   const { isLoading, runTx } = useTransaction();
-  const { claimFluid } = useContract();
+  const { claimFluid, getAmountOfStGasReward } = useContract();
   const { balance: stGasBalance, refetch: refetchStGasBalance } =
     useTokenBalance({
       token: STGAS,
     });
 
   const [disableButton, setDisableButton] = useState(false);
+  const [receiveAmount, setReceiveAmount] = useState('');
+
+  useEffect(() => {
+    updateReceiveAmount();
+  }, [account]);
 
   // 버튼 활성화 여부
   useEffect(() => {
@@ -33,12 +39,20 @@ const ClaimReward = () => {
     }
   }, [isLoading, account]);
 
+  // Update ReceiveAmount
+  const updateReceiveAmount = async () => {
+    if (!account) return setReceiveAmount('');
+    const amount = await getAmountOfStGasReward(account);
+    setReceiveAmount(STGAS.format(amount));
+  };
+
   // Claim reward
   const handleClick = () => {
     runTx({
       txFn: () => claimFluid(),
       onAfterTx: () => {
         refetchStGasBalance();
+        updateReceiveAmount();
       },
     });
   };
@@ -52,8 +66,18 @@ const ClaimReward = () => {
       <Spacing height={24}></Spacing>
 
       <Flex justify="between" wrap>
-        <Text semibold>Current stGAS</Text>
+        <Flex items="center" gap={8}>
+          <Symbol token={STGAS}></Symbol>
+          <Text semibold>{STGAS.symbol}</Text>
+        </Flex>
         <Text>{account ? comma(stGasBalance) : '-'}</Text>
+      </Flex>
+
+      <Spacing height={24}></Spacing>
+
+      <Flex justify="between" wrap>
+        <Text semibold>you will receive</Text>
+        <Text>{account ? `${comma(receiveAmount)} ${STGAS.symbol}` : '-'}</Text>
       </Flex>
 
       <Spacing height={64}></Spacing>
