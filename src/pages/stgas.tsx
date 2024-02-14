@@ -1,14 +1,13 @@
 import React from 'react';
-import tw, { styled } from 'twin.macro';
 
 import Head from '@/components/layout/Head';
 import Layout from '@/components/layout/Layout';
 import UnstakeStGAS from '@/components/unstake/UnstakeStGAS';
 
-const Unstake = () => {
+const StGASPage = () => {
   return (
     <Layout>
-      <Head title="Fluid - Unstake"></Head>
+      <Head></Head>
       <Layout.Container>
         <UnstakeStGAS></UnstakeStGAS>
       </Layout.Container>
@@ -16,4 +15,4 @@ const Unstake = () => {
   );
 };
 
-export default Unstake;
+export default StGASPage;
