@@ -1,4 +1,3 @@
-import { parseEther } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
 
@@ -84,7 +83,7 @@ const UnstakeStGas = () => {
 
   // Stake
   const handleClick = () => {
-    const parsedAmount = parseEther(amount);
+    const parsedAmount = STGAS.parse(amount);
     runTx({
       txFn: () => unstakeStGas(parsedAmount),
       onAfterTx: () => {

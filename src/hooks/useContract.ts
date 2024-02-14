@@ -1,6 +1,5 @@
 import { waitForTransactionReceipt } from '@wagmi/core';
 import { Contract, parseEther, Provider, Signer } from 'ethers';
-import { useMemo } from 'react';
 import { erc20Abi } from 'viem';
 
 import BlastABI from '@/abis/Blast.json';
@@ -14,7 +13,6 @@ import {
   STGAS,
 } from '@/constants';
 import useEthers from '@/hooks/useEthers';
-import useWallet from '@/hooks/useWallet';
 
 const useContract = () => {
   const { provider, signer } = useEthers();
@@ -56,6 +54,11 @@ const useContract = () => {
     return fluidContract().getAmountReward(address);
   };
 
+  // 토큰당 claimed된 stGAS 수량 조회
+  const getStGasClaimedPerToken = () => {
+    return stGasContract().gasClaimedPerToken();
+  };
+
   /** @signer */
   // Add reward
   const addReward = async () => {
@@ -82,18 +85,31 @@ const useContract = () => {
     return stGasContract(signer).unstake(amount);
   };
 
+  // Unstaking stGAS를 즉시 claim할 수 있는 어드민 함수
+  const distributeStGasToStaker = async (amount: BigInt) => {
+    return stGasContract(signer).distributeGasToStaker(amount);
+  };
+
+  // Claim stGAS
+  const claimStGas = async (index: BigInt, amount: BigInt) => {
+    return stGasContract(signer).claim(index, amount);
+  };
+
   return {
     approve,
     getTxReceipt,
     getTotalStakedFluid,
     getUnstakingStGasPostionList,
     getAmountOfStGasReward,
+    getStGasClaimedPerToken,
 
     addReward,
     claimFluid,
     faucetFluid,
     stakeFluid,
     unstakeStGas,
+    distributeStGasToStaker,
+    claimStGas,
   };
 };
 
