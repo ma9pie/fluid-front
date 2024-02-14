@@ -3,6 +3,10 @@ import React from 'react';
 import { FaAngleRight } from 'react-icons/fa6';
 import tw, { styled } from 'twin.macro';
 
+/**
+ * @unused
+ */
+
 interface Props {
   href: string;
   title: string;
