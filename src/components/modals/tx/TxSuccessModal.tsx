@@ -3,11 +3,12 @@ import { MdCheck } from 'react-icons/md';
 import tw, { styled } from 'twin.macro';
 
 import Button from '@/components/common/buttons/Button';
+import Flex from '@/components/common/Flex';
 import Text from '@/components/common/Text';
 import useWallet from '@/hooks/useWallet';
 import { TxSuccessModalProps } from '@/types';
 
-const TxSuccessModal = ({ txHash }: TxSuccessModalProps) => {
+const TxSuccessModal = ({ txHash, message }: TxSuccessModalProps) => {
   const { explorerUrl } = useWallet();
 
   const openExplorer = () => {
@@ -19,7 +20,16 @@ const TxSuccessModal = ({ txHash }: TxSuccessModalProps) => {
   return (
     <Wrapper>
       <MdCheck size={80} color="#15c47e"></MdCheck>
-      <Text semibold>Transaction Completed!</Text>
+
+      <Flex col items="center" gap={4}>
+        <Text semibold>Transaction Completed!</Text>
+        {message && (
+          <Text semibold sm>
+            {message}
+          </Text>
+        )}
+      </Flex>
+
       <Button color="default" size="sm" onClick={openExplorer}>
         <Text xs> View on explorer</Text>
       </Button>

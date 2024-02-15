@@ -7,6 +7,7 @@ import useWallet from '@/hooks/useWallet';
 interface RunTx {
   txFn: () => Promise<any>;
   onAfterTx?: () => void;
+  successMsg?: string;
 }
 
 const useTransaction = () => {
@@ -22,7 +23,11 @@ const useTransaction = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Tx 실행
-  const runTx = async ({ txFn, onAfterTx = () => {} }: RunTx) => {
+  const runTx = async ({
+    txFn,
+    onAfterTx = () => {},
+    successMsg = '',
+  }: RunTx) => {
     try {
       if (!account) return;
       setIsLoading(true);
@@ -35,6 +40,7 @@ const useTransaction = () => {
       changeModal(() =>
         openTxSuccessModal({
           txHash: hash,
+          message: successMsg,
         })
       );
       onAfterTx();

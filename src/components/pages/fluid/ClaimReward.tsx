@@ -54,6 +54,7 @@ const ClaimReward = () => {
         refetchStGasBalance();
         updateReceiveAmount();
       },
+      successMsg: `you receive ${comma(receiveAmount)} ${STGAS.symbol}`,
     });
   };
 

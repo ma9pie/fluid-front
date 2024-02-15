@@ -21,4 +21,5 @@ export type Modals = Map<string, ModalProps>;
 
 export interface TxSuccessModalProps {
   txHash?: string;
+  message?: string;
 }

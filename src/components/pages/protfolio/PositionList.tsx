@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/nextui';
-import { STGAS } from '@/constants';
+import { ETH, STGAS } from '@/constants';
 import useContract from '@/hooks/useContract';
 import useTransaction from '@/hooks/useTransaction';
 import useWallet from '@/hooks/useWallet';
@@ -82,13 +82,14 @@ const PositionList = () => {
   };
 
   // Claim
-  const handleClick = (id: number) => {
+  const handleClick = (id: number, amount: string) => {
     const index = BigInt(id);
     runTx({
       txFn: () => claimStGas(index),
       onAfterTx: () => {
         updatePositionList();
       },
+      successMsg: `you receive ${comma(amount)} ${ETH.symbol}`,
     });
   };
 
@@ -131,7 +132,7 @@ const PositionList = () => {
                 <Center>
                   <Button
                     disabled={claimPercent < 100 || isLoading}
-                    onClick={() => handleClick(id)}
+                    onClick={() => handleClick(id, amount)}
                   >
                     Claim
                   </Button>
