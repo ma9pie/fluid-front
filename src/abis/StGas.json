@@ -109,6 +109,15 @@
   },
   {
     "type": "function",
+    "name": "distributeGasToStaker",
+    "inputs": [
+      { "name": "amount", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [],
+    "stateMutability": "payable"
+  },
+  {
+    "type": "function",
     "name": "etherBox",
     "inputs": [],
     "outputs": [
