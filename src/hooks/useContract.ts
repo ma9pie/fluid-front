@@ -87,12 +87,14 @@ const useContract = () => {
 
   // Unstaking stGAS를 즉시 claim할 수 있는 어드민 함수
   const distributeStGasToStaker = async (amount: BigInt) => {
-    return stGasContract(signer).distributeGasToStaker(amount);
+    return stGasContract(signer).distributeGasToStaker(amount, {
+      value: amount,
+    });
   };
 
   // Claim stGAS
   const claimStGas = async (index: BigInt, amount: BigInt) => {
-    return stGasContract(signer).claim(index, amount);
+    return stGasContract(signer).claim(index, 0);
   };
 
   return {

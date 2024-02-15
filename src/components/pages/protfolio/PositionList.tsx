@@ -48,7 +48,9 @@ const PositionList = () => {
       getStGasClaimedPerToken(),
     ]);
 
-    const _positionList = unstakeInfo.map((item: any) => {
+    const _positionList: Position[] = [];
+
+    unstakeInfo.map((item: any) => {
       const {
         index,
         user,
@@ -58,20 +60,22 @@ const PositionList = () => {
         isClaimed,
       } = item;
 
+      if (isClaimed) return;
+
       const claimPercent = math(stGasClaimedPerToken)
         .sub(gasClaimedPerToken)
         .div(1e18)
         .mul(100)
         .toNumber();
 
-      return {
+      _positionList.push({
         id: Number(index),
         address: user,
         date: moment(Number(unstakeTime) * 1000).format('MMM DD, YYYY HH:mm'),
         amount: STGAS.format(amount),
         isClaimed,
         claimPercent,
-      };
+      });
     });
 
     setPositionList(_positionList);
@@ -83,6 +87,9 @@ const PositionList = () => {
     const parsedAmount = STGAS.parse(amount);
     runTx({
       txFn: () => claimStGas(index, parsedAmount),
+      onAfterTx: () => {
+        updatePositionList();
+      },
     });
   };
 
@@ -124,7 +131,7 @@ const PositionList = () => {
               <TableCell>
                 <Center>
                   <Button
-                    disabled={isClaimed || claimPercent < 100 || isLoading}
+                    disabled={claimPercent < 100 || isLoading}
                     onClick={() => handleClick(id, amount)}
                   >
                     Claim
