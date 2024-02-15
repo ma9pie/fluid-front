@@ -61,6 +61,7 @@ const PositionList = () => {
       const claimPercent = math(stGasClaimedPerToken)
         .sub(gasClaimedPerToken)
         .div(1e18)
+        .mul(100)
         .toNumber();
 
       return {
