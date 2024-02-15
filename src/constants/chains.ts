@@ -1,6 +1,6 @@
 export const CHAIN_ID = 168587773;
 export const PUBLIC_RPC_URL = 'https://sepolia.blast.io';
-export const PROJECT_RPC_URL = process.env.NEXT_PUBLIC_RPC_URL;
+export const PROJECT_RPC_URL = process.env.NEXT_PUBLIC_RPC_URL!;
 export const BLAST_SEPOLIA_TESTNET = {
   id: 168587773,
   name: 'Blast Sepolia Testnet',
