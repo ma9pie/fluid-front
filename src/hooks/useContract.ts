@@ -93,7 +93,7 @@ const useContract = () => {
   };
 
   // Claim stGAS
-  const claimStGas = async (index: BigInt, amount: BigInt) => {
+  const claimStGas = async (index: BigInt) => {
     return stGasContract(signer).claim(index, 0);
   };
 

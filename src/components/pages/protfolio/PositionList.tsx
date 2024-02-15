@@ -82,11 +82,10 @@ const PositionList = () => {
   };
 
   // Claim
-  const handleClick = (id: number, amount: string) => {
+  const handleClick = (id: number) => {
     const index = BigInt(id);
-    const parsedAmount = STGAS.parse(amount);
     runTx({
-      txFn: () => claimStGas(index, parsedAmount),
+      txFn: () => claimStGas(index),
       onAfterTx: () => {
         updatePositionList();
       },
@@ -110,7 +109,7 @@ const PositionList = () => {
           </TableColumn>
         </TableHeader>
         <TableBody>
-          {positionList.map(({ id, date, amount, isClaimed, claimPercent }) => (
+          {positionList.map(({ id, date, amount, claimPercent }) => (
             <TableRow key={id}>
               <TableCell>{date}</TableCell>
               <TableCell>{id}</TableCell>
@@ -132,7 +131,7 @@ const PositionList = () => {
                 <Center>
                   <Button
                     disabled={claimPercent < 100 || isLoading}
-                    onClick={() => handleClick(id, amount)}
+                    onClick={() => handleClick(id)}
                   >
                     Claim
                   </Button>
