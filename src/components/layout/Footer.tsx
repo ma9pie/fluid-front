@@ -9,7 +9,7 @@ import { DISCORD_URL, TWITTER_URL } from '@/constants';
 const Footer = () => {
   return (
     <Wrapper>
-      <Text>Ⓒ2024. Fluid Inc. All Rights Reserved.</Text>
+      <Text>Ⓒ2024. Fluid protocol. All Rights Reserved.</Text>
       <Flex gap={16}>
         <IconWrapper href={TWITTER_URL} target="_blank">
           <FaXTwitter size={20} color="gray"></FaXTwitter>
