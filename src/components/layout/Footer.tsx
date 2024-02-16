@@ -14,9 +14,10 @@ const Footer = () => {
         <IconWrapper href={TWITTER_URL} target="_blank">
           <FaXTwitter size={20} color="gray"></FaXTwitter>
         </IconWrapper>
-        <IconWrapper href={DISCORD_URL} target="_blank">
+        {/* FIXME: 추후 링크 연동 */}
+        {/* <IconWrapper href={DISCORD_URL} target="_blank">
           <FaDiscord size={20} color="gray"></FaDiscord>
-        </IconWrapper>
+        </IconWrapper> */}
       </Flex>
     </Wrapper>
   );
