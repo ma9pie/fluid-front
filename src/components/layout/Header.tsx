@@ -16,12 +16,14 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
 } from '@/components/nextui';
+import { GITBOOK_URL } from '@/constants';
 
 const MENU_LIST = [
   { title: 'Home', url: '/' },
   { title: 'Fluid', url: '/fluid' },
   { title: 'stGAS', url: '/stgas' },
   { title: 'Portfolio', url: '/portfolio' },
+  { title: 'Docs', url: GITBOOK_URL, target: '_blank' },
   { title: 'Admin', url: '/admin' },
 ];
 
@@ -43,8 +45,8 @@ const Header = () => {
           <ResponsiveView
             desktop={
               <MenuContainer>
-                {MENU_LIST.map(({ title, url }) => (
-                  <Link key={title} href={url}>
+                {MENU_LIST.map(({ title, url, target }) => (
+                  <Link key={title} href={url} target={target}>
                     <Menu selected={router.pathname === url}>{title}</Menu>
                   </Link>
                 ))}
