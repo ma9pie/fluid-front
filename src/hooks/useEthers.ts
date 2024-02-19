@@ -11,6 +11,7 @@ import { type Config, useClient, useConnectorClient } from 'wagmi';
 import { CHAIN_ID } from '@/constants';
 
 const clientToProvider = (client: Client<Transport, Chain>) => {
+  if (!client) return null;
   const { chain, transport } = client;
   const network = {
     chainId: chain.id,
