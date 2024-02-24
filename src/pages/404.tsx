@@ -7,7 +7,7 @@ import Layout from '@/components/layout/Layout';
 const NotFound = () => {
   return (
     <Layout>
-      <Head title="Fluid - Not Found"></Head>
+      <Head title="Fluid | Not Found"></Head>
       <Wrapper>
         <Text>404</Text>
         <Text>Not Found</Text>

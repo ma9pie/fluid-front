@@ -7,7 +7,7 @@ import UnstakeStGas from '@/components/pages/stgas/UnstakeStGas';
 const StGasPage = () => {
   return (
     <Layout>
-      <Head></Head>
+      <Head title="Fluid | stGAS"></Head>
       <Layout.Container>
         <UnstakeStGas></UnstakeStGas>
       </Layout.Container>
