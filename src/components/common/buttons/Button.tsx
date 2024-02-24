@@ -30,18 +30,17 @@ const Component = ({
   onClick,
 }: Props) => {
   return (
-    <span className={className}>
-      <Button
-        color={color}
-        size={size}
-        radius={radius}
-        fullWidth={full}
-        isDisabled={disabled}
-        onClick={onClick}
-      >
-        {children}
-      </Button>
-    </span>
+    <Button
+      className={className}
+      color={color}
+      size={size}
+      radius={radius}
+      fullWidth={full}
+      isDisabled={disabled}
+      onClick={onClick}
+    >
+      {children}
+    </Button>
   );
 };
 

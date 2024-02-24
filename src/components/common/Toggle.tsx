@@ -1,5 +1,5 @@
 import React, { ChangeEvent, ReactNode } from 'react';
-import { styled } from 'twin.macro';
+import tw, { styled } from 'twin.macro';
 
 import { Switch } from '@/components/nextui';
 
@@ -43,5 +43,9 @@ export default Toggle;
 const Wrapper = styled(Switch)`
   span {
     margin: 0px;
+  }
+  & > span {
+    ${tw`!bg-brandColor`};
+    ${tw`dark:!bg-neutral-700`};
   }
 `;
