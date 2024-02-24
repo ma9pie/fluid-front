@@ -17,13 +17,16 @@ import {
   NavbarMenuToggle,
 } from '@/components/nextui';
 
-const MENU_LIST = [
-  { title: 'Home', url: '/' },
-  { title: 'Fluid', url: '/fluid' },
-  { title: 'stGAS', url: '/stgas' },
-  { title: 'Portfolio', url: '/portfolio' },
-  { title: 'Admin', url: '/admin' },
-];
+const MENU_LIST =
+  process.env.NEXT_PUBLIC_MODE === 'production'
+    ? [{ title: 'Home', url: '/' }]
+    : [
+        { title: 'Home', url: '/' },
+        { title: 'Fluid', url: '/fluid' },
+        { title: 'stGAS', url: '/stgas' },
+        { title: 'Portfolio', url: '/portfolio' },
+        { title: 'Admin', url: '/admin' },
+      ];
 
 const Header = () => {
   const router = useRouter();
