@@ -32,11 +32,9 @@ const Footer = () => {
 export default Footer;
 
 const Wrapper = styled.div`
-  ${tw`flex justify-between items-center flex-wrap h-12 border-t border-solid`};
+  ${tw`flex justify-between items-center flex-wrap h-12 backdrop-blur-[18px]`};
   ${tw`px-4`};
   ${tw`md:px-6`};
-  ${tw`border-neutral-100`};
-  ${tw`dark:border-neutral-900`};
 `;
 const Text = styled.p`
   ${tw`text-sm text-neutral-500 font-medium`};

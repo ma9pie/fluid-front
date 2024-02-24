@@ -55,7 +55,11 @@ const Header = () => {
 
         <ResponsiveView
           mobile={
-            <Navbar isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+            <Navbar
+              className="bg-transparent"
+              isMenuOpen={isMenuOpen}
+              onMenuOpenChange={setIsMenuOpen}
+            >
               <NavbarContent justify="end">
                 <NavbarMenuToggle></NavbarMenuToggle>
                 <NavbarMenu>
@@ -96,13 +100,11 @@ const Header = () => {
 export default Header;
 
 const Wrapper = styled.div`
-  ${tw`w-full h-16 border-b border-solid`};
-  ${tw`border-neutral-100`};
-  ${tw`dark:border-neutral-900`};
+  ${tw`w-full h-16 backdrop-blur-[18px]`};
 `;
 const Container = styled.div`
   ${tw`flex justify-between items-center gap-6 h-16`};
-  ${tw`px-4`};
+  ${tw`pl-4`};
   ${tw`md:px-6`};
 `;
 const LinkContainer = styled.div`

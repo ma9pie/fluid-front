@@ -12,6 +12,8 @@ const config: Config = {
     extend: {
       colors: {
         brandColor: 'var(--brandColor)',
+        yellowBg: 'var(--yellowBg)',
+        darkBg: 'var(--darkBg)',
       },
     },
   },

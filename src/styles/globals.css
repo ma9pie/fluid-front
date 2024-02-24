@@ -3,7 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --brandColor: #f7de33;
+  --brandColor: #f9d141;
+  --yellowBg: #fffed5;
+  --darkBg: #141414;
+}
+
+.poppins {
+  font-family: 'Poppins', sans-serif;
+  font-style: normal;
 }
 
 /* layout 확인용 class */

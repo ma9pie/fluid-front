@@ -8,8 +8,9 @@ const PortfolioPage = () => {
   return (
     <Layout>
       <Head></Head>
-      <PositionList></PositionList>
-      <Layout.Container></Layout.Container>
+      <Layout.Container maxWidth={1280}>
+        <PositionList></PositionList>
+      </Layout.Container>
     </Layout>
   );
 };
