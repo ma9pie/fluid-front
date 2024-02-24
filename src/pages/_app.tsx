@@ -4,6 +4,7 @@ import { NextUIProvider } from '@nextui-org/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import { DefaultSeo } from 'next-seo';
 import { ThemeProvider, useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import tw, { styled } from 'twin.macro';
@@ -13,6 +14,7 @@ import ModalProvider from '@/components/providers/ModalProvider';
 import { wagmiConfig } from '@/config';
 import { IS_PRODUCTION } from '@/constants';
 import { initializeGA, trackPageView } from '@/utils';
+import seoConfig from '~/next-seo.config';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,7 @@ const App = (props: AppProps) => {
         <ThemeProvider attribute="class" enableSystem={false}>
           <NextUIProvider>
             <ModalProvider>
+              <DefaultSeo {...seoConfig}></DefaultSeo>
               <Inner {...props}></Inner>
             </ModalProvider>
           </NextUIProvider>

@@ -7,7 +7,7 @@ import Main from '@/components/pages/home/Main';
 const Home = () => {
   return (
     <Layout>
-      <Head title="Fluid - Home"></Head>
+      <Head title="Fluid | Home"></Head>
       <Main></Main>
     </Layout>
   );

@@ -9,7 +9,7 @@ import StakeFluid from '@/components/pages/fluid/StakeFluid';
 const FluidPage = () => {
   return (
     <Layout>
-      <Head></Head>
+      <Head title="Fluid | fluid"></Head>
       <Layout.Container>
         <FaucetFluid></FaucetFluid>
         <StakeFluid></StakeFluid>

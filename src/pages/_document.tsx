@@ -1,45 +1,9 @@
 import { Head, Html, Main, NextScript } from 'next/document';
 
-const URL = 'https://fluid-dev.vercel.app/';
-const TITLE = 'Fluid';
-const DESCRIPTION = '';
-const KEYWORDS = '';
-const TWITTER_CARD_IMAGE = '/images/twitter-card.png';
-const LOGO_IMAGE = '/icons/favicon-96x96.png';
-
 export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* Meta Tags */}
-        <meta name="description" content={DESCRIPTION} />
-        <meta charSet="utf-8" />
-        <meta name="author" content="" />
-        <meta name="image" content={TWITTER_CARD_IMAGE} />
-        <meta name="robots" content="index, follow" />
-        <meta name="keywords" content={KEYWORDS} />
-
-        {/* Facebook Meta Tags */}
-        <meta property="og:url" content={URL} />
-        <link rel="canonical" href={URL} />
-        <meta property="og:site_name" content={TITLE} />
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:image" content={TWITTER_CARD_IMAGE} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={URL} />
-        <meta name="twitter:site_name" content={TITLE} />
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:image" content={TWITTER_CARD_IMAGE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
-        <meta name="twitter:type" content="website" />
-
-        <link rel="icon" type="image/png" href={LOGO_IMAGE} />
-        <link rel="shortcut icon" type="image/x-icon" href={LOGO_IMAGE} />
-
         {/* https://www.favicon-generator.org/ */}
         <link
           rel="apple-touch-icon"

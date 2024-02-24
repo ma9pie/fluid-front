@@ -7,7 +7,7 @@ import PositionList from '@/components/pages/protfolio/PositionList';
 const PortfolioPage = () => {
   return (
     <Layout>
-      <Head></Head>
+      <Head title="Fluid | protfolio"></Head>
       <Layout.Container maxWidth={1280}>
         <PositionList></PositionList>
       </Layout.Container>
