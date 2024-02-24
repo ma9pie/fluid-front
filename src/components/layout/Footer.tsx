@@ -32,7 +32,7 @@ const Footer = () => {
 export default Footer;
 
 const Wrapper = styled.div`
-  ${tw`flex justify-between items-center flex-wrap h-12 backdrop-blur-[18px]`};
+  ${tw`flex justify-between items-center flex-wrap h-12 bg-[rgba(255,255,255,0.01)] backdrop-blur-[18px]`};
   ${tw`px-4`};
   ${tw`md:px-6`};
 `;

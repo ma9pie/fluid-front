@@ -100,7 +100,7 @@ const Header = () => {
 export default Header;
 
 const Wrapper = styled.div`
-  ${tw`w-full h-16 backdrop-blur-[18px]`};
+  ${tw`w-full h-16 bg-[rgba(255,255,255,0.01)] backdrop-blur-[18px]`};
 `;
 const Container = styled.div`
   ${tw`flex justify-between items-center gap-6 h-16`};
