@@ -16,9 +16,11 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
 } from '@/components/nextui';
+import { IS_PRODUCTION } from '@/constants';
 
 const MENU_LIST =
-  process.env.NEXT_PUBLIC_MODE === 'production'
+  // TODO: mainnet migration 이후 open
+  IS_PRODUCTION
     ? [{ title: 'Home', url: '/' }]
     : [
         { title: 'Home', url: '/' },

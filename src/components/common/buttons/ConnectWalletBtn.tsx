@@ -14,13 +14,13 @@ const ConnectWalletBtn = () => {
   return (
     <Wrapper>
       {account ? (
-        <Button full onClick={disconnect}>
+        <AccountButton full onClick={disconnect}>
           <Text>{ellipsis(account)}</Text>
-        </Button>
+        </AccountButton>
       ) : (
-        <Button className="bg-brandColor" full onClick={openConnectWalletModal}>
-          <Text black>Connect Wallet</Text>
-        </Button>
+        <ConnectButton full onClick={openConnectWalletModal}>
+          <Text>Connect Wallet</Text>
+        </ConnectButton>
       )}
     </Wrapper>
   );
@@ -31,4 +31,11 @@ export default ConnectWalletBtn;
 const Wrapper = styled.div`
   ${tw`w-full`};
   ${tw`md:w-32`};
+`;
+const AccountButton = styled(Button)`
+  ${tw``};
+`;
+const ConnectButton = styled(Button)`
+  ${tw`bg-brandColor`};
+  ${tw`dark:(text-white bg-neutral-700)`};
 `;
