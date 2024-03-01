@@ -14,14 +14,14 @@ const Footer = () => {
     <Wrapper>
       <Text>Ⓒ2024. Fluid protocol. All Rights Reserved.</Text>
       <Flex gap={32}>
-        <IconWrapper href={GITBOOK_URL} target="_blank">
-          <SiGitbook size={20} color={ICON_COLOR}></SiGitbook>
-        </IconWrapper>
         <IconWrapper href={TWITTER_URL} target="_blank">
           <FaXTwitter size={20} color={ICON_COLOR}></FaXTwitter>
         </IconWrapper>
         <IconWrapper href={DISCORD_URL} target="_blank">
           <FaDiscord size={20} color={ICON_COLOR}></FaDiscord>
+        </IconWrapper>
+        <IconWrapper href={GITBOOK_URL} target="_blank">
+          <SiGitbook size={20} color={ICON_COLOR}></SiGitbook>
         </IconWrapper>
       </Flex>
     </Wrapper>
